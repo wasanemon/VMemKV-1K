@@ -1,0 +1,405 @@
+{
+  "measured_directory": "build/ltm/results/page-residency-skip-rate-20260923",
+  "metadata": {
+    "provenance.json": {
+      "commit": "e75746c2d03e0d53edaf566c157aad95172b887c",
+      "branch": "codex/page-residency-bitmap",
+      "sha256": {
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_page_residency_skip_rate.py": "9bb2ee6a74fa4e890c8c99e2b0a2dbfdff9fdafc65eaa40d7b471e9f31c499fd",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/page_residency_skip_rate.inc": "686dec5ae17eb8d67f1b6f0aa0d3f99ff291b85cc0efd739f0c991de410e9e6a",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/page_residency_loader.py": "ccdaea508658e75bd3b7653b04d709034e1b18a39ec7031ba5a170aa2545803a",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-skip-rate-20260923/count-hints": "fa10f5312cbaf8351fb91b882a823aab06398172bcf80f80a53ce1267aa9e5bf",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-skip-rate-20260923/source/bitmap/src/vmemkv/read_path.hpp": "f6e302441df0e45eede0a525be6a4b59e110223d1f62d28b80b659198c955695",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-skip-rate-20260923/source/bitmap/fixed_pread_benchmark.cpp": "1695156a2cff93866356bf6249f8dee3d044e9917ccc5c9d1b3ec403e39c22d0",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-skip-rate-20260923/source/bitmap/src/vmemkv/page_residency_hints.hpp": "3ec6f26a7225f49876c112c680b9925c439c83aaddc12d8ca25605fb5dfef9f1",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-bitmap-20260923/page_residency_bitmap.bpf.o": "3fdd9d9550159749ce8c6898fe69d7acf174d7959dd942394917b36852981535"
+      },
+      "bitmap_provenance": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-bitmap-20260923/provenance.json",
+      "note": "圧縮版の別コピーに2カウンター追加。BPFと経路選択・登録処理は変更なし。"
+    },
+    "build-command.json": [
+      "g++-13",
+      "-std=gnu++23",
+      "-O3",
+      "-DNDEBUG",
+      "-DBENCHMARK_STATIC_DEFINE",
+      "-pthread",
+      "-I/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-skip-rate-20260923/source/bitmap/include",
+      "-I/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-skip-rate-20260923/source/bitmap/src",
+      "-I/home/wasanemon/project/VMemKV-1K/build/vmemkv-gcc13/_deps/google_benchmark-src/include",
+      "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-skip-rate-20260923/source/bitmap/fixed_pread_benchmark.cpp",
+      "/home/wasanemon/project/VMemKV-1K/build/vmemkv-gcc13/libvmemkv.a",
+      "/home/wasanemon/project/VMemKV-1K/build/vmemkv-gcc13/_deps/google_benchmark-build/src/libbenchmark.a",
+      "-ltbb",
+      "-o",
+      "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-skip-rate-20260923/count-hints"
+    ]
+  },
+  "runs": {
+    "Uniform": {
+      "command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-skip-rate-20260923/count-hints",
+          "--count-hints",
+          "Uniform"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-skip-rate-20260923/runs/Uniform",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "PAGE_HINT_FD": "5",
+          "PAGE_HINT_PAGES": "1716438",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp"
+        }
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8409088,
+        "after_current": 9117696,
+        "body_bytes": 643680
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-skip-bdcd0ad9a9cc.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-skip-bdcd0ad9a9cc",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_page_residency_skip_rate.py",
+        "case",
+        "--dist",
+        "Uniform",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016"
+      ],
+      "scope-exit.json": {
+        "code": 0
+      },
+      "windows.json": [
+        {
+          "distribution": "Uniform",
+          "get_begin": 0,
+          "get_end": 100000,
+          "target_gets": 20746,
+          "mincore_skipped": 126,
+          "skip_percent": 0.6073459944085607
+        },
+        {
+          "distribution": "Uniform",
+          "get_begin": 100000,
+          "get_end": 200000,
+          "target_gets": 20741,
+          "mincore_skipped": 374,
+          "skip_percent": 1.8031917458174629
+        },
+        {
+          "distribution": "Uniform",
+          "get_begin": 200000,
+          "get_end": 300000,
+          "target_gets": 20787,
+          "mincore_skipped": 604,
+          "skip_percent": 2.9056621927166018
+        },
+        {
+          "distribution": "Uniform",
+          "get_begin": 300000,
+          "get_end": 400000,
+          "target_gets": 20937,
+          "mincore_skipped": 869,
+          "skip_percent": 4.150546878731433
+        },
+        {
+          "distribution": "Uniform",
+          "get_begin": 400000,
+          "get_end": 500000,
+          "target_gets": 20740,
+          "mincore_skipped": 1122,
+          "skip_percent": 5.409836065573771
+        },
+        {
+          "distribution": "Uniform",
+          "get_begin": 500000,
+          "get_end": 600000,
+          "target_gets": 20947,
+          "mincore_skipped": 1420,
+          "skip_percent": 6.779013701246002
+        },
+        {
+          "distribution": "Uniform",
+          "get_begin": 600000,
+          "get_end": 700000,
+          "target_gets": 20943,
+          "mincore_skipped": 1661,
+          "skip_percent": 7.931050947810724
+        },
+        {
+          "distribution": "Uniform",
+          "get_begin": 700000,
+          "get_end": 800000,
+          "target_gets": 21072,
+          "mincore_skipped": 1961,
+          "skip_percent": 9.306188306757782
+        },
+        {
+          "distribution": "Uniform",
+          "get_begin": 800000,
+          "get_end": 900000,
+          "target_gets": 20814,
+          "mincore_skipped": 2116,
+          "skip_percent": 10.16623426539829
+        },
+        {
+          "distribution": "Uniform",
+          "get_begin": 900000,
+          "get_end": 1000000,
+          "target_gets": 20630,
+          "mincore_skipped": 2384,
+          "skip_percent": 11.55598642753272
+        }
+      ]
+    },
+    "Zipf": {
+      "command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-skip-rate-20260923/count-hints",
+          "--count-hints",
+          "Zipf"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-skip-rate-20260923/runs/Zipf",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "PAGE_HINT_FD": "5",
+          "PAGE_HINT_PAGES": "1716438",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp"
+        }
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8409088,
+        "after_current": 9121792,
+        "body_bytes": 643680
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-skip-2b7cb422bea5.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-skip-2b7cb422bea5",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_page_residency_skip_rate.py",
+        "case",
+        "--dist",
+        "Zipf",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016"
+      ],
+      "scope-exit.json": {
+        "code": 0
+      },
+      "windows.json": [
+        {
+          "distribution": "Zipf",
+          "get_begin": 0,
+          "get_end": 100000,
+          "target_gets": 18871,
+          "mincore_skipped": 9454,
+          "skip_percent": 50.09803402045467
+        },
+        {
+          "distribution": "Zipf",
+          "get_begin": 100000,
+          "get_end": 200000,
+          "target_gets": 18621,
+          "mincore_skipped": 11128,
+          "skip_percent": 59.76048547339026
+        },
+        {
+          "distribution": "Zipf",
+          "get_begin": 200000,
+          "get_end": 300000,
+          "target_gets": 18686,
+          "mincore_skipped": 11831,
+          "skip_percent": 63.314781119554745
+        },
+        {
+          "distribution": "Zipf",
+          "get_begin": 300000,
+          "get_end": 400000,
+          "target_gets": 18527,
+          "mincore_skipped": 12182,
+          "skip_percent": 65.75268527014627
+        },
+        {
+          "distribution": "Zipf",
+          "get_begin": 400000,
+          "get_end": 500000,
+          "target_gets": 18581,
+          "mincore_skipped": 12593,
+          "skip_percent": 67.77353210268554
+        },
+        {
+          "distribution": "Zipf",
+          "get_begin": 500000,
+          "get_end": 600000,
+          "target_gets": 18670,
+          "mincore_skipped": 12798,
+          "skip_percent": 68.54847348687734
+        },
+        {
+          "distribution": "Zipf",
+          "get_begin": 600000,
+          "get_end": 700000,
+          "target_gets": 18724,
+          "mincore_skipped": 13139,
+          "skip_percent": 70.17197180089724
+        },
+        {
+          "distribution": "Zipf",
+          "get_begin": 700000,
+          "get_end": 800000,
+          "target_gets": 18703,
+          "mincore_skipped": 13234,
+          "skip_percent": 70.75870181254344
+        },
+        {
+          "distribution": "Zipf",
+          "get_begin": 800000,
+          "get_end": 900000,
+          "target_gets": 18647,
+          "mincore_skipped": 13387,
+          "skip_percent": 71.7917091221108
+        },
+        {
+          "distribution": "Zipf",
+          "get_begin": 900000,
+          "get_end": 1000000,
+          "target_gets": 18539,
+          "mincore_skipped": 13532,
+          "skip_percent": 72.99207076972868
+        }
+      ]
+    }
+  },
+  "summary.json": [
+    {
+      "distribution": "Uniform",
+      "initial": {
+        "distribution": "Uniform",
+        "get_begin": 0,
+        "get_end": 100000,
+        "target_gets": 20746,
+        "mincore_skipped": 126,
+        "skip_percent": 0.6073459944085607
+      },
+      "late": {
+        "distribution": "Uniform",
+        "get_begin": 900000,
+        "get_end": 1000000,
+        "target_gets": 20630,
+        "mincore_skipped": 2384,
+        "skip_percent": 11.55598642753272
+      }
+    },
+    {
+      "distribution": "Zipf",
+      "initial": {
+        "distribution": "Zipf",
+        "get_begin": 0,
+        "get_end": 100000,
+        "target_gets": 18871,
+        "mincore_skipped": 9454,
+        "skip_percent": 50.09803402045467
+      },
+      "late": {
+        "distribution": "Zipf",
+        "get_begin": 900000,
+        "get_end": 1000000,
+        "target_gets": 18539,
+        "mincore_skipped": 13532,
+        "skip_percent": 72.99207076972868
+      }
+    }
+  ],
+  "plan.json": {
+    "distributions": [
+      "Uniform",
+      "Zipf"
+    ],
+    "scenario": "resident",
+    "threads": 1,
+    "gets_per_distribution": 1000000,
+    "window_gets": 100000,
+    "repetitions": 1,
+    "denominator": "ticket.active（ページ跨ぎ小レコードの対象Get）",
+    "note": "T2は事前常駐、ヒントは初期未知。連続乱数列。GB較正なし。throughputとして評価しない。"
+  },
+  "event-formats.json": {
+    "mm_filemap_add_to_page_cache": "name: mm_filemap_add_to_page_cache\nID: 498\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:unsigned long pfn;\toffset:8;\tsize:8;\tsigned:0;\n\tfield:unsigned long i_ino;\toffset:16;\tsize:8;\tsigned:0;\n\tfield:unsigned long index;\toffset:24;\tsize:8;\tsigned:0;\n\tfield:dev_t s_dev;\toffset:32;\tsize:4;\tsigned:0;\n\nprint fmt: \"dev %d:%d ino %lx page=%p pfn=0x%lx ofs=%lu\", ((unsigned int) ((REC->s_dev) >> 20)), ((unsigned int) ((REC->s_dev) & ((1U << 20) - 1))), REC->i_ino, (((struct page *)vmemmap_base) + (REC->pfn)), REC->pfn, REC->index << 12\n",
+    "mm_filemap_delete_from_page_cache": "name: mm_filemap_delete_from_page_cache\nID: 499\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:unsigned long pfn;\toffset:8;\tsize:8;\tsigned:0;\n\tfield:unsigned long i_ino;\toffset:16;\tsize:8;\tsigned:0;\n\tfield:unsigned long index;\toffset:24;\tsize:8;\tsigned:0;\n\tfield:dev_t s_dev;\toffset:32;\tsize:4;\tsigned:0;\n\nprint fmt: \"dev %d:%d ino %lx page=%p pfn=0x%lx ofs=%lu\", ((unsigned int) ((REC->s_dev) >> 20)), ((unsigned int) ((REC->s_dev) & ((1U << 20) - 1))), REC->i_ino, (((struct page *)vmemmap_base) + (REC->pfn)), REC->pfn, REC->index << 12\n"
+  }
+}

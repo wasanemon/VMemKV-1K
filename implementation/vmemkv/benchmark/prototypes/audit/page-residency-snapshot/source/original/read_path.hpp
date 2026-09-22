@@ -254,7 +254,7 @@ inline auto try_read_base_record(const T2Memory *mem,
     case BaseReader::kScan:
       return read_base_record_via(Selector::for_scan(mem, is_small), offset, base_boundary);
     case BaseReader::kGet:
-      if (is_small && size_hint <= kPageSize - offset % kPageSize) {
+      if (is_small) {
         return read_base_record_via(Selector::for_get_small(mem), offset, base_boundary);
       }
       if (std::byte *pinned = Selector::for_get_large_pinned(mem); pinned != nullptr) {

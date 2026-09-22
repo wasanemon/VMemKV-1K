@@ -1,0 +1,138 @@
+{
+  "measured_directory": "build/ltm/results/page-residency-registration-audit-20260923",
+  "metadata": {
+    "provenance.json": {
+      "commit": "e75746c2d03e0d53edaf566c157aad95172b887c",
+      "branch": "codex/page-residency-bitmap",
+      "sha256": {
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_page_residency_registration_audit.py": "be191f93a055f27150c59d25de06581e3e14d6076eae5bd334aee0d8e3264bf6",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/page_residency_registration_audit.hpp": "cc8a834a2898b628c8c686dc0d34ae9d5558fb17a003bfb344db0c4cc3d3433e",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_page_residency_skip_rate.py": "9bb2ee6a74fa4e890c8c99e2b0a2dbfdff9fdafc65eaa40d7b471e9f31c499fd",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-registration-audit-20260923/count-hints": "4746e04d6060e4b0bd923a9ac1ecf32373c7161aa6a93739ef4f386df1cdb470",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-registration-audit-20260923/source/bitmap/src/vmemkv/read_path.hpp": "4fd4af008e64e346b6f7a9d72720bbb8a336e104b54e7846c74d34d4f8025026",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-registration-audit-20260923/source/bitmap/fixed_pread_benchmark.cpp": "1d2efceb41103fdced07ae1324e053cb1caa63f3e32d340a283c21bc7638710c",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-bitmap-20260923/page_residency_bitmap.bpf.o": "3fdd9d9550159749ce8c6898fe69d7acf174d7959dd942394917b36852981535"
+      },
+      "note": "BPF・登録・失効は未変更。常駐Uniform1回の登録照合専用。"
+    },
+    "build-command.json": [
+      "g++-13",
+      "-std=gnu++23",
+      "-O3",
+      "-DNDEBUG",
+      "-DBENCHMARK_STATIC_DEFINE",
+      "-pthread",
+      "-I/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-registration-audit-20260923/source/bitmap/include",
+      "-I/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-registration-audit-20260923/source/bitmap/src",
+      "-I/home/wasanemon/project/VMemKV-1K/build/vmemkv-gcc13/_deps/google_benchmark-src/include",
+      "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-registration-audit-20260923/source/bitmap/fixed_pread_benchmark.cpp",
+      "/home/wasanemon/project/VMemKV-1K/build/vmemkv-gcc13/libvmemkv.a",
+      "/home/wasanemon/project/VMemKV-1K/build/vmemkv-gcc13/_deps/google_benchmark-build/src/libbenchmark.a",
+      "-ltbb",
+      "-o",
+      "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-registration-audit-20260923/count-hints"
+    ]
+  },
+  "runs": {
+    "Uniform": {
+      "command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-registration-audit-20260923/count-hints",
+          "--count-hints",
+          "Uniform"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-registration-audit-20260923/runs/Uniform",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "PAGE_HINT_FD": "5",
+          "PAGE_HINT_PAGES": "1716438",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp"
+        }
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8265728,
+        "after_current": 8970240,
+        "body_bytes": 643680
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-hint-audit-0f67a1db2e97.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-hint-audit-0f67a1db2e97",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_page_residency_registration_audit.py",
+        "case",
+        "--dist",
+        "Uniform",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016"
+      ],
+      "scope-exit.json": {
+        "code": 0
+      }
+    }
+  },
+  "summary.json": {
+    "kind": "registration_audit",
+    "target_gets": 208357,
+    "mincore_skipped": 12637,
+    "expected_skipped_without_events": 12637,
+    "decision_mismatches": 0,
+    "mincore_errors": 0,
+    "mincore_nonresident": 0,
+    "resident_page_checks": 391440,
+    "unregistered_after_confirm": 0,
+    "initial_known_pages": 0,
+    "recorded_unique_pages": 370908,
+    "actual_known_pages_at_end": 370908,
+    "recorded_pages_missing_at_end": 0,
+    "generation_events_during_gets": 0
+  },
+  "plan.json": {
+    "scenario": "resident",
+    "distribution": "Uniform",
+    "threads": 1,
+    "gets": 1000000,
+    "repetitions": 1,
+    "note": "常駐確認直後の登録、独立記録との経路判定一致、終了時のヒント保持を確認。イベント数が0のときに失効なしとして解釈。速度は評価しない。"
+  },
+  "event-formats.json": {
+    "mm_filemap_add_to_page_cache": "name: mm_filemap_add_to_page_cache\nID: 498\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:unsigned long pfn;\toffset:8;\tsize:8;\tsigned:0;\n\tfield:unsigned long i_ino;\toffset:16;\tsize:8;\tsigned:0;\n\tfield:unsigned long index;\toffset:24;\tsize:8;\tsigned:0;\n\tfield:dev_t s_dev;\toffset:32;\tsize:4;\tsigned:0;\n\nprint fmt: \"dev %d:%d ino %lx page=%p pfn=0x%lx ofs=%lu\", ((unsigned int) ((REC->s_dev) >> 20)), ((unsigned int) ((REC->s_dev) & ((1U << 20) - 1))), REC->i_ino, (((struct page *)vmemmap_base) + (REC->pfn)), REC->pfn, REC->index << 12\n",
+    "mm_filemap_delete_from_page_cache": "name: mm_filemap_delete_from_page_cache\nID: 499\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:unsigned long pfn;\toffset:8;\tsize:8;\tsigned:0;\n\tfield:unsigned long i_ino;\toffset:16;\tsize:8;\tsigned:0;\n\tfield:unsigned long index;\toffset:24;\tsize:8;\tsigned:0;\n\tfield:dev_t s_dev;\toffset:32;\tsize:4;\tsigned:0;\n\nprint fmt: \"dev %d:%d ino %lx page=%p pfn=0x%lx ofs=%lu\", ((unsigned int) ((REC->s_dev) >> 20)), ((unsigned int) ((REC->s_dev) & ((1U << 20) - 1))), REC->i_ino, (((struct page *)vmemmap_base) + (REC->pfn)), REC->pfn, REC->index << 12\n"
+  }
+}

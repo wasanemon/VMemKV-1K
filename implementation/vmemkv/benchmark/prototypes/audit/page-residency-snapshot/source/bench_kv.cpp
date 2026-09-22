@@ -957,7 +957,7 @@ void for_each_in_tuple(Visitor &&visitor) {
   for_each_in_tuple_impl<Tuple>(std::forward<Visitor>(visitor), std::make_index_sequence<std::tuple_size_v<Tuple>>{});
 }
 
-using BenchmarkTypes = vmemkv::variants::AllPossibleTypes;
+using BenchmarkTypes = std::tuple<vmemkv::VMemKVStore>;
 
 // Rival backends take a bare path (they manage their own on-disk capacity/layout);
 // only VMemKV configurations take the extra T2 capacity argument.

@@ -1,0 +1,91 @@
+--- proposal1/read_path.hpp
++++ snapshot/read_path.hpp
+@@ -1,3 +1,4 @@
++#include "page_residency_hints.hpp"
+ // read_path.hpp - T2 base-region read path for VMemKVImpl.
+ //
+ // Once a record's offset is below `base_boundary`, its bytes are immutable forever (an
+@@ -159,15 +160,20 @@
+   const auto aligned_start = start & ~kPageMask;
+   const auto aligned_len = ((start + read_len + kPageMask) & ~kPageMask) - aligned_start;
+ 
++  const auto ticket = page_residency::observe(mapping, offset, read_len);
++  if (!ticket.hit) {
+   thread_local static std::vector<unsigned char> tl_mincore_vec;
+   tl_mincore_vec.resize(aligned_len / kPageSize);
+   if (::mincore(reinterpret_cast<void *>(aligned_start), aligned_len, tl_mincore_vec.data()) != 0) {
+     return std::nullopt;
+   }
++  ticket.confirm(tl_mincore_vec.data());
+   for (unsigned char page_status : tl_mincore_vec) {
+     if ((page_status & 1) == 0) {
+       return std::nullopt;  // Not resident -- let the caller's pread() fetch it instead.
+     }
++  }
++
+   }
+ 
+   const auto *header = reinterpret_cast<const ValueRecordHeader *>(record_base);
+--- proposal1/fixed_pread_benchmark.cpp
++++ snapshot/fixed_pread_benchmark.cpp
+@@ -1,3 +1,6 @@
++#include <chrono>
++#include <iomanip>
++#include "vmemkv/page_residency_snapshot.hpp"
+ // 公開bench_kv.cppのベンチマーク本体を再利用。実験用コピーでのみビルドする。
+ #define main original_benchmark_main
+ #include "bench_kv.cpp"
+@@ -57,8 +60,10 @@
+ // regression_throughput.cppの実験用コピーのmainに挿入。通常測定には入らない。
+   if (argc == 2 && std::string(argv[1]) == "--verify") {
+     RegressionStore store(path, RegressionStore::ConfigType::DefaultT2CapacityBytes);
++    page_residency::verify_registration();
++    page_residency::initialize(store.t2().get_memory()->base_mmap_scan, store.t2().bytes_used());
+     prepare_cache(store, false);
+-    for (int pass = 0; pass < 2; ++pass) {
++    for (int pass = 0; pass < 3; ++pass) {
+       std::mt19937_64 rng(42);
+       for (size_t i = 0; i < 1024; ++i) {
+         const auto index = i < 512 ? i : rng() % count;
+@@ -70,7 +75,7 @@
+       }
+     }
+     if (store.get(make_key(count + 1), [](auto) {})) throw std::runtime_error("false Get hit");
+-    std::cout << "verify: PASS (1024 keys, two passes; miss)\n";
++    std::cout << "verify: PASS (1024 keys, three passes; miss; generation CAS)\n";
+     return 0;
+   }
+ 
+@@ -78,7 +83,21 @@
+   const bool resident = required_env("REGRESSION_SCENARIO") == "resident";
+   auto make = [path, resident] {
+     auto store = std::make_unique<RegressionStore>(path, RegressionStore::ConfigType::DefaultT2CapacityBytes);
++    page_residency::initialize(store->t2().get_memory()->base_mmap_scan, store->t2().bytes_used());
+     prepare_cache(*store, resident);
++    if (store->t2().get_memory()->base_boundary.load() != store->t2().bytes_used())
++      throw std::runtime_error("immutable checkpoint only");
++    if (!page_residency::states) throw std::runtime_error("BPF map required");
++    const auto begin = std::chrono::steady_clock::now();
++    const auto snap = page_residency::snapshot(store->t2().bytes_used());
++    const double elapsed = std::chrono::duration<double>(std::chrono::steady_clock::now()-begin).count();
++    uint64_t confirmed = 0;
++    for (uint64_t g = 0; g < (page_residency::pages+63)/64; ++g)
++      confirmed += __builtin_popcountll(page_residency::load(&page_residency::states[g].resident));
++    std::cout << std::setprecision(12) << "{\"snapshot_seconds\":" << elapsed
++              << ",\"resident_pages\":" << snap.resident_pages
++              << ",\"confirmed_pages\":" << confirmed
++              << ",\"mincore_calls\":" << snap.calls << "}\n";
+     return store;
+   };
+   auto corpus = [make](size_t, size_t) { return make(); };
+--- original/read_path.hpp
++++ proposal1/read_path.hpp
+@@ -254,7 +254,7 @@
+     case BaseReader::kScan:
+       return read_base_record_via(Selector::for_scan(mem, is_small), offset, base_boundary);
+     case BaseReader::kGet:
+-      if (is_small) {
++      if (is_small && size_hint <= kPageSize - offset % kPageSize) {
+         return read_base_record_via(Selector::for_get_small(mem), offset, base_boundary);
+       }
+       if (std::byte *pinned = Selector::for_get_large_pinned(mem); pinned != nullptr) {

@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="VMemKVの1KB Larger Than Memory Get (Hit)を実測し、T2ファイルのページ読み込み待ちが主ボトルネックであることを示す調査報告。">
+  <meta name="color-scheme" content="light">
+  <title>VMemKV 1KB LTM Get (Hit) — ボトルネック調査</title>
+  <style>
+    :root {
+      --ink: #182c3d; --muted: #4e6471; --accent: #086b66;
+      --accent-light: #edf6f3; --wait: #a04c24; --wait-light: #fcf3eb;
+      --line: #d8e1e3; --paper: #fff; --ground: #f3f5f4;
+      --mono: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-padding-top: 1.5rem; }
+    body {
+      margin: 0; color: var(--ink); background: var(--ground);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+      font-size: 16px; line-height: 1.9; overflow-wrap: anywhere;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-underline-offset: .2em; }
+    a:hover { text-decoration-thickness: 2px; }
+    a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
+      outline: 3px solid #148c82; outline-offset: 4px;
+    }
+    .skip { position: absolute; left: 1rem; top: -5rem; padding: .5rem 1rem; background: #fff; z-index: 5; }
+    .skip:focus { top: .5rem; }
+    .document { max-width: 1120px; margin: 40px auto; padding: 54px 64px 36px; background: var(--paper); border: 1px solid var(--line); }
+    .masthead { display: flex; justify-content: space-between; gap: 1rem; align-items: center; padding-bottom: 22px; border-bottom: 2px solid var(--ink); }
+    .brand { font-weight: 750; letter-spacing: .025em; }
+    .brand small { font-size: .78rem; color: var(--muted); font-weight: 500; margin-left: 1rem; }
+    .print { border: 1px solid var(--line); border-radius: 4px; padding: .45rem .85rem; background: #fff; color: var(--muted); font: inherit; font-size: .8rem; cursor: pointer; }
+    .kicker { color: var(--muted); font-size: .85rem; margin: 30px 0 10px; }
+    h1 { font-size: clamp(1.85rem, 4.4vw, 2.65rem); line-height: 1.45; letter-spacing: -.035em; margin: 0 0 22px; font-weight: 750; }
+    h1 span { display: block; }
+    h2 { font-size: 1.4rem; line-height: 1.6; margin: 0 0 20px; padding-top: 2px; letter-spacing: -.02em; }
+    h2 .number { color: var(--accent); margin-right: .75rem; font-family: var(--mono); font-size: .9rem; font-weight: 500; }
+    h3 { font-size: 1.07rem; line-height: 1.6; margin: 26px 0 10px; }
+    p { margin: 0 0 16px; }
+    p:last-child { margin-bottom: 0; }
+    strong { font-weight: 750; }
+    section { margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--line); }
+    .conclusion { background: var(--accent-light); padding: 23px 26px; border-left: 4px solid var(--accent); }
+    .conclusion .label { color: var(--accent); font-size: .8rem; font-weight: 700; margin-bottom: 5px; }
+    .conclusion .lead { font-size: 1.15rem; font-weight: 700; line-height: 1.8; margin-bottom: 10px; }
+    .conclusion p:last-child { font-size: .94rem; }
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); margin: 26px 0; }
+    .metric { padding: 4px 22px 4px 0; }
+    .metric + .metric { padding-left: 24px; border-left: 1px solid var(--line); }
+    .metric-value { font-size: 2.25rem; line-height: 1.3; font-weight: 750; letter-spacing: -.045em; font-variant-numeric: tabular-nums; }
+    .metric-value small { font-size: 1.05rem; font-weight: 600; margin-left: 3px; }
+    .metric p { font-size: .82rem; color: var(--muted); line-height: 1.65; margin-top: 8px; }
+    nav { padding: 16px 0 0; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 7px 23px; font-size: .85rem; }
+    nav a { text-decoration: none; }
+    nav a:hover { text-decoration: underline; }
+    .note { color: var(--muted); font-size: .87rem; line-height: 1.85; }
+    .definition { border-left: 3px solid var(--line); padding-left: 17px; margin: 18px 0 24px; }
+    .scope { display: grid; grid-template-columns: 150px minmax(0, 1fr); margin: 0; }
+    .scope dt, .scope dd { margin: 0; padding: 12px 0; border-bottom: 1px solid var(--line); }
+    .scope dt { color: var(--muted); font-size: .91rem; padding-right: 18px; }
+    .scope dd { font-size: .94rem; }
+    code { font-family: var(--mono); font-size: .88em; background: #f0f3f4; border-radius: 3px; padding: .12em .32em; overflow-wrap: anywhere; }
+    .evidence { margin-top: 28px; }
+    .evidence h3 { margin-top: 0; }
+    figure { margin: 20px 0; }
+    figcaption { color: var(--muted); font-size: .82rem; margin-top: 10px; line-height: 1.7; }
+    .time-figure { padding: 22px 24px; border: 1px solid var(--line); }
+    .figure-title { font-size: .9rem; font-weight: 700; margin-bottom: 13px; }
+    .time-bar { display: flex; height: 36px; width: 100%; overflow: hidden; border-radius: 3px; }
+    .time-bar .cpu { width: 15.5%; background: var(--accent); }
+    .time-bar .offcpu { width: 84.5%; background: var(--wait); }
+    .legend { display: flex; gap: 10px 28px; flex-wrap: wrap; margin-top: 12px; font-size: .86rem; }
+    .legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; background: var(--accent); margin-right: 8px; }
+    .legend .wait-key::before { background: var(--wait); }
+    .evidence-list { padding-left: 1.3rem; margin: 14px 0; }
+    li { margin: 8px 0; padding-left: .2rem; }
+    .callout { padding: 16px 20px; border: 1px solid var(--line); margin: 18px 0; font-size: .93rem; }
+    .callout strong { color: var(--accent); }
+    .comparison { padding: 20px 24px; background: #f7f9f8; }
+    .bar-row + .bar-row { margin-top: 18px; }
+    .bar-meta { display: flex; justify-content: space-between; gap: 1rem; font-size: .9rem; margin-bottom: 6px; }
+    .bar-meta strong { white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .bar-track { height: 16px; background: #e5ebea; border-radius: 2px; }
+    .bar-fill { height: 100%; background: var(--accent); border-radius: 2px; }
+    .bar-fill.ltm { width: 3.729388%; background: var(--wait); }
+    .bar-fill.resident { width: 94.960582%; }
+    .axis { display: flex; justify-content: space-between; font-size: .74rem; color: var(--muted); margin-top: 8px; }
+    .reading-path { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 0; gap: 16px; list-style: none; margin: 22px 0 0; }
+    .reading-path li { position: relative; margin: 0; border: 1px solid var(--line); padding: 17px 16px; background: #f7f9f8; }
+    .reading-path li:not(:last-child)::after { content: "→"; position: absolute; right: -14px; top: 48%; color: var(--muted); font-size: .8rem; }
+    .reading-path li.fault { background: var(--wait-light); border-color: #e4c6ad; }
+    .step { display: block; color: var(--muted); font-family: var(--mono); font-size: .75rem; margin-bottom: 6px; }
+    .reading-path strong { display: block; line-height: 1.5; font-size: .94rem; margin-bottom: 8px; }
+    .reading-path p { font-size: .82rem; line-height: 1.75; }
+    .inline-path { padding: 12px 16px; border-left: 3px solid var(--accent); background: var(--accent-light); margin-top: 12px; font-size: .86rem; }
+    .table-wrap { overflow-x: auto; margin: 18px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: .88rem; line-height: 1.75; }
+    caption { text-align: left; margin: 0 0 10px; font-weight: 700; color: var(--ink); }
+    th, td { padding: 12px 13px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    thead th { background: #f0f4f3; text-align: left; color: var(--muted); font-weight: 600; font-size: .8rem; }
+    tbody th { text-align: left; font-weight: 600; }
+    td.num, th.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .results { min-width: 730px; }
+    .control th, .control td { background: var(--accent-light); }
+    .supporting { background: #f7f9f8; padding: 20px 24px; margin: 22px 0 0; }
+    .supporting p { font-size: .92rem; }
+    .tag { color: var(--accent); font-size: .76rem; font-weight: 700; letter-spacing: .025em; }
+    .two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .two-columns h3 { margin-top: 0; }
+    .two-columns ul { padding-left: 1.25rem; font-size: .91rem; margin-top: 10px; }
+    details { margin: 14px 0; border: 1px solid var(--line); border-radius: 4px; }
+    summary { padding: 15px 20px; cursor: pointer; font-weight: 650; font-size: .93rem; }
+    details[open] summary { border-bottom: 1px solid var(--line); }
+    .detail-body { padding: 22px; font-size: .9rem; }
+    .detail-body h3:first-child { margin-top: 0; }
+    .detail-body .table-wrap { margin-top: 0; }
+    pre { background: #f2f5f5; padding: 18px; border: 1px solid var(--line); overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.75; font-size: .79rem; }
+    pre code { background: none; padding: 0; font-size: 1em; }
+    .file-list { margin: 12px 0; padding-left: 1.25rem; }
+    footer { border-top: 2px solid var(--ink); margin-top: 40px; padding-top: 20px; color: var(--muted); font-size: .8rem; }
+    .print-only { display: none; }
+    @media (max-width: 850px) {
+      .document { margin: 0; padding: 32px 28px; border: 0; }
+      .reading-path { grid-template-columns: 1fr 1fr; }
+      .reading-path li::after { display: none; }
+    }
+    @media (max-width: 540px) {
+      body { font-size: 15px; }
+      .document { padding: 24px 20px; }
+      .brand small { display: block; margin-left: 0; }
+      .metrics { grid-template-columns: 1fr; margin: 20px 0; }
+      .metric, .metric + .metric { display: grid; grid-template-columns: 106px 1fr; gap: 12px; align-items: center; padding: 12px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+      .metric-value { font-size: 1.9rem; }
+      .metric p { margin: 0; }
+      .scope { grid-template-columns: 1fr; }
+      .scope dt { border-bottom: 0; padding: 13px 0 0; font-weight: 700; }
+      .scope dd { padding: 3px 0 13px; }
+      .conclusion, .time-figure, .comparison, .supporting { padding: 18px; }
+      .two-columns { grid-template-columns: 1fr; gap: 12px; }
+      .bar-meta { flex-wrap: wrap; gap: 2px 12px; }
+      .reading-path { grid-template-columns: 1fr; gap: 10px; }
+      .reading-path li { padding: 14px 16px; }
+      .step { display: inline; margin-right: 8px; }
+      .reading-path strong { display: inline; }
+      .reading-path p { margin-top: 6px; }
+      .detail-body { padding: 16px; }
+      section { margin-top: 32px; padding-top: 24px; }
+    }
+    @page { size: A4; margin: 16mm 15mm; }
+    @media print {
+      body { background: #fff; color: #000; font-size: 10pt; line-height: 1.65; }
+      .document { max-width: none; margin: 0; padding: 0; border: 0; }
+      .print, nav, .skip { display: none; }
+      h1 { font-size: 24pt; }
+      h2 { font-size: 15pt; break-after: avoid; }
+      h3, caption, summary { break-after: avoid; }
+      section { margin-top: 22px; padding-top: 18px; }
+      figure, .conclusion, .metrics, .reading-path, tr { break-inside: avoid; }
+      .table-wrap { overflow: visible; }
+      .results { min-width: 0; }
+      table { font-size: 8.5pt; }
+      th, td { padding: 8px; }
+      a { color: inherit; }
+      .time-bar, .bar-track, .bar-fill, .legend span::before { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .two-columns { grid-template-columns: 1fr 1fr; }
+      .reading-path { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      details { border: 0; margin-top: 20px; }
+      summary { padding: 0 0 10px; list-style: none; }
+      .detail-body { padding: 12px 0 0; }
+      pre { font-size: 8pt; }
+      footer { margin-top: 24px; }
+      .print-only { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">本文へ移動</a>
+  <div class="document">
+    <header>
+      <div class="masthead">
+        <div class="brand">VMemKV <small>性能調査報告</small></div>
+        <button class="print" type="button" id="print-button">印刷 / PDF保存</button>
+      </div>
+      <p class="kicker"><time datetime="2026-09-22">2026年9月22日</time> · 対象：1KB Larger Than Memory / Get (Hit)</p>
+      <h1>1KB LTM Get (Hit)<span>ボトルネック調査</span></h1>
+      <div class="conclusion">
+        <p class="label">結論</p>
+        <p class="lead">主ボトルネックは、メモリにないT2ファイルのページを読み込む際の、同期I/O待ちである。</p>
+        <p>索引でキーが見つかった後、値を読むスレッド自身がストレージからの読み込み完了を待つ。代表設定 <code>Bloom-T1InlineValue</code> の実測で、待機場所・フォルト先・メモリ制約を変えた対照実験の結果が、この結論を支持した。</p>
+      </div>
+      <div class="metrics" aria-label="結論を支える主な測定値">
+        <div class="metric"><div class="metric-value">84.5<small>%</small></div><p>CPUを実行していない時間<br>Uniform・1スレッド</p></div>
+        <div class="metric"><div class="metric-value">99.97<small>%</small></div><p>major faultの採取先がT2<br>3,251サンプル中3,250件</p></div>
+        <div class="metric"><div class="metric-value">25.5<small>倍</small></div><p>メモリ制約を緩めた対照との速度差<br>同じデータ・同じ実装</p></div>
+      </div>
+      <nav aria-label="目次">
+        <a href="#scope">01 測定条件</a><a href="#evidence">02 判断の根拠</a><a href="#mechanism">03 発生箇所</a><a href="#results">04 結果一覧</a><a href="#limits">05 解釈と限界</a><a href="#appendix">06 資料・再現手順</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section id="scope" aria-labelledby="scope-title">
+        <h2 id="scope-title"><span class="number">01</span>何を、どの条件で測ったか</h2>
+        <p>LTM（Larger Than Memory）は、データが利用可能なメモリに収まらない条件を指す。今回は、既存キーを読み取る <strong>Get (Hit)</strong> に絞り、ボトルネックの特定までを行った。改良の実装・評価は行っていない。</p>
+        <p class="definition"><strong>「Hit」はキーが存在するという意味。</strong>値がすでにメモリ上にあることまでは意味しない。キーを索引で見つけても、値があるページをストレージから読み込む必要がある場合がある。</p>
+        <dl class="scope">
+          <dt>実装・設定</dt><dd><code>Bloom-T1InlineValue</code>。T1が索引、T2が値を格納するファイル。8Bの小さい値はT1に直接保持できる。</dd>
+          <dt>データ</dt><dd><strong>8,259,552キー</strong>、キー長16B。80%のキーは1024B値、20%は8B値。T2の実使用範囲は<strong>6.55GiB</strong>。</dd>
+          <dt>読み取り分布</dt><dd><strong>Uniform</strong>：全キーを均等に選ぶ。<strong>Zipf</strong>：一部のキーにアクセスが集中する（パラメーター1.0）。乱数seedは <code>42 + thread_index</code>。</dd>
+          <dt>メモリ条件</dt><dd>cgroupの <code>MemoryHigh=1GiB</code>、<code>MemoryMax=2GiB</code>。1GiB超で回収圧力がかかり、2GiBが上限となる。各実行で適用値を確認した。ホストのSwapは総量4GiB。</dd>
+          <dt>測定範囲</dt><dd>1・16スレッドの2条件。値の全バイトをチェックサム計算で読み取る。初期化・データコピーを除いた最終測定区間を集計。各条件1回、perfは別実行で採取した。</dd>
+        </dl>
+        <p class="note" style="margin-top:16px">調査の起点は<a href="https://vmemkv.pages.dev/2026091416_charts.html">公開ベンチマーク（2026-09-14）</a>。今回のローカル環境はCPU・ストレージ・カーネルが異なるため、公開値との速度差は改善率として比較しない。環境・コミットの詳細は<a href="#environment-details">資料欄</a>に記載した。</p>
+      </section>
+
+      <section id="evidence" aria-labelledby="evidence-title">
+        <h2 id="evidence-title"><span class="number">02</span>主因と判断した3つの根拠</h2>
+        <div class="evidence">
+          <h3>1. 処理の大半は、CPU計算ではなくページの到着を待っている</h3>
+          <p>Uniform・1スレッドでは、363,121回のGetに<strong>27.819秒</strong>かかり、測定スレッドのCPU時間は<strong>4.313秒</strong>だった。差分の約23.506秒、全体の84.5%はCPUを実行していない時間に当たる。</p>
+          <figure class="time-figure">
+            <div class="figure-title">Uniform・1スレッドの経過時間（27.819秒）</div>
+            <div class="time-bar" role="img" aria-label="CPU実行15.5パーセント、4.313秒。非CPU時間84.5パーセント、約23.506秒。"><span class="cpu"></span><span class="offcpu"></span></div>
+            <div class="legend"><span>CPU実行：15.5% / 4.313秒</span><span class="wait-key">非CPU時間：84.5% / 約23.506秒</span></div>
+            <figcaption>非CPU時間だけでは待ちの種類は判別できないため、次の待機場所・フォルト回数と合わせて判断した。</figcaption>
+          </figure>
+          <ul class="evidence-list">
+            <li>0.5秒間隔の観測で、主スレッドは<strong>55点中47点</strong>が <code>wait_on_page_bit_common</code> にいた。これはページの処理完了を待つ場所である。</li>
+            <li>major faultは<strong>313,796回</strong>。主スレッドの自発的コンテキストスイッチ（自らCPUを手放す回数）も<strong>313,796回</strong>だった。</li>
+          </ul>
+          <p class="note">major faultは、ページの利用にストレージI/Oを要するページフォルト。CPU計算量だけを測るプロファイルに、これらの待ち時間は含まれない。</p>
+        </div>
+        <div class="evidence">
+          <h3>2. フォルトの発生先は、ほぼすべてT2データファイルだった</h3>
+          <p>perfでmajor faultを97回ごとに採取し、最終測定区間の<strong>3,251サンプル中3,250件（99.97%）</strong>がT2クローンファイル内のアドレスだった。残る1件は匿名メモリ領域だった。</p>
+          <div class="callout"><strong>この99.97%は、採取したmajor faultの発生先の割合。</strong>全Getのうち99.97%がI/Oを行ったという意味ではない。通常計測のUniformでは、Getあたりのmajor faultは平均0.864回だった。</div>
+          <p class="note">perf採取時は12,585 ops/s、CPU稼働率15.5%。通常計測の13,053 ops/s、15.5%と近い傾向を示した。</p>
+        </div>
+        <div class="evidence">
+          <h3>3. 同じデータがメモリに収まると、読み込み待ちが消えた</h3>
+          <p>同じ8,259,552キー・同じバイナリ・Uniform・1スレッドで、メモリ制約を<strong>High=16GiB / Max=32GiB</strong>に緩めた。スループットは33.2万件/秒に上がり、測定区間のmajor faultとデバイス読み込みはともに0となった。</p>
+          <figure class="comparison">
+            <div class="figure-title">スループットの対照比較</div>
+            <div class="bar-row"><div class="bar-meta"><span>LTM（High 1GiB / Max 2GiB）</span><strong>13,053 ops/s</strong></div><div class="bar-track" aria-hidden="true"><div class="bar-fill ltm"></div></div></div>
+            <div class="bar-row"><div class="bar-meta"><span>制約緩和（High 16GiB / Max 32GiB）</span><strong>332,362 ops/s</strong></div><div class="bar-track" aria-hidden="true"><div class="bar-fill resident"></div></div></div>
+            <div class="axis" aria-hidden="true"><span>0</span><span>350,000 ops/s</span></div>
+            <figcaption>約25.5倍という差は、メモリ条件を変えた際の差を表す。実装は両条件で同じ。</figcaption>
+          </figure>
+          <p class="note">対照でもLTMと同じ件数・データを維持した。通常のIn-Memory用コーパス（8,000,000キー）には切り替えていない。</p>
+        </div>
+      </section>
+
+      <section id="mechanism" aria-labelledby="mechanism-title">
+        <h2 id="mechanism-title"><span class="number">03</span>実装のどこで待ちが発生するか</h2>
+        <p>1KB値のGetは、T1索引から得た位置を使い、<code>mmap</code>されたT2ファイルを直接読む。ページがメモリにない場合、その読み取り命令でフォルトが起き、スレッドは読み込み完了を待つ。</p>
+        <figure>
+          <ol class="reading-path">
+            <li><span class="step">01</span><strong>T1を検索</strong><p>キーから、値があるT2の位置を得る。</p></li>
+            <li class="fault"><span class="step">02</span><strong>T2ヘッダーを読む</strong><p>キー長・値長を確認する。<b>主要なフォルト位置。</b></p></li>
+            <li><span class="step">03</span><strong>キーを照合</strong><p>取得したレコードのキーが一致するか確認する。</p></li>
+            <li class="fault"><span class="step">04</span><strong>値全体を読む</strong><p>コールバックで全バイトを走査。<b>次ページでもフォルト。</b></p></li>
+          </ol>
+          <div class="inline-path">8Bのインライン値は、T1検索後にその場で値を返すため、T2を読む手順を省く。</div>
+          <figcaption>T2のマッピングは <code>MAP_SHARED + MADV_RANDOM</code>。1KB値はsmall判定の経路を通り、大きい値用の <code>mincore()</code> / <code>pread()</code> 経路は使わない。</figcaption>
+        </figure>
+        <div class="table-wrap" role="region" aria-label="フォルト命令の内訳" tabindex="0">
+          <table>
+            <caption>perfの発生命令と実装の対応</caption>
+            <thead><tr><th scope="col">処理・ソース</th><th scope="col" class="num">サンプル数</th><th scope="col" class="num">割合</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">ヘッダー読込 <code>header-&gt;key_len / value_len</code><br><span class="note"><a href="../../src/vmemkv/read_path.hpp">read_path.hpp:134</a> · ELF相対 <code>0x617ae</code></span></th><td class="num">2,552</td><td class="num">78.5%</td></tr>
+              <tr><th scope="row">値の全走査 <code>touch_bytes()</code><br><span class="note"><a href="../../benchmark/bench_kv.cpp">bench_kv.cpp:648</a> · ELF相対 <code>0x61b42</code></span></th><td class="num">675</td><td class="num">20.8%</td></tr>
+              <tr><th scope="row">キー照合等 <code>memcmp</code><br><span class="note">libc内。匿名領域の1サンプルを含む。</span></th><td class="num">24</td><td class="num">0.7%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>値の読み取りで起きた675サンプルは、<strong>すべてフォルト先が4KBページの先頭</strong>だった。1KBの値でもページ境界をまたぐと、ヘッダー側に加えて次のページを読む必要がある。ここでの20.8%はフォルトサンプルの割合であり、待ち時間の割合ではない。</p>
+        <p>Uniformの平均値サイズは820.8Bだが、実測のデバイス読み込みは<strong>3,541B/Get（約4.3倍）</strong>。この差には、ページ単位の読み込みやページ境界の通過、少量のSwapなどが含まれる。</p>
+        <div class="supporting">
+          <p class="tag">メモリ量からの解釈</p>
+          <p>LTMの測定終了時は、索引等を含む匿名メモリが約324〜328MiB、cgroupのファイルキャッシュが約656〜667MiBだった。<strong>T2の実使用量6.55GiBに対し、ファイルキャッシュは約1/10の規模</strong>にとどまる。</p>
+          <p>値を常駐させられる量が小さく、ページの回収・再読み込みが発生する。このため、広い範囲を均等に読むUniformでは、局所性のあるZipfよりGetあたりのフォルトが多いと解釈できる。T1とT2への最適なメモリ配分は今回検証していない。</p>
+        </div>
+      </section>
+
+      <section id="results" aria-labelledby="results-title">
+        <h2 id="results-title"><span class="number">04</span>Zipf・並列実行を含む結果一覧</h2>
+        <p>両分布の1・16スレッドで、CPU稼働率は15.5〜27.0%にとどまり、ページ読み込み待ちが主因という傾向は共通していた。ZipfではGetあたりのフォルト回数が少なく、スループットも高い。</p>
+        <div class="table-wrap" role="region" aria-label="全測定条件の結果。狭い画面では横にスクロールできます。" tabindex="0">
+          <table class="results" id="measurement-table">
+            <caption>通常計測4条件と、メモリ制約を緩めた対照</caption>
+            <thead><tr><th scope="col">条件</th><th scope="col" class="num">スレッド</th><th scope="col" class="num">件/秒</th><th scope="col" class="num">CPU稼働率<sup>1</sup></th><th scope="col" class="num">major fault<br>/ Get</th><th scope="col" class="num">読込B<br>/ Get<sup>2</sup></th></tr></thead>
+            <tbody>
+              <tr data-case="ltm-uniform-t1"><th scope="row">LTM / Uniform</th><td class="num">1</td><td class="num">13,053</td><td class="num">15.5%</td><td class="num">0.864</td><td class="num">3,541</td></tr>
+              <tr data-case="ltm-zipf-t1"><th scope="row">LTM / Zipf</th><td class="num">1</td><td class="num">49,823</td><td class="num">23.7%</td><td class="num">0.203</td><td class="num">834</td></tr>
+              <tr data-case="ltm-uniform-t16"><th scope="row">LTM / Uniform</th><td class="num">16</td><td class="num">147,513</td><td class="num">20.7%</td><td class="num">0.907</td><td class="num">3,714</td></tr>
+              <tr data-case="ltm-zipf-t16"><th scope="row">LTM / Zipf</th><td class="num">16</td><td class="num">652,306</td><td class="num">27.0%</td><td class="num">0.191</td><td class="num">786</td></tr>
+              <tr class="control" data-case="resident-uniform-t1"><th scope="row">制約緩和 / Uniform</th><td class="num">1</td><td class="num">332,362</td><td class="num">100.0%</td><td class="num">0</td><td class="num">0</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">1. 測定スレッドあたりのCPU稼働率。Google Benchmarkの <code>cpu_time / real_time / threads × 100</code> で算出。ホスト全体のCPU使用率ではない。<br>2. <code>/proc/PID/io</code> の <code>read_bytes</code> 増分をGet回数で割った値。初期化時のデータコピーは集計から除外。major faultも <code>/proc/PID/stat</code> の区間差分から求めた。</p>
+      </section>
+
+      <section id="limits" aria-labelledby="limits-title">
+        <h2 id="limits-title"><span class="number">05</span>どこまで言えるか</h2>
+        <div class="two-columns">
+          <div>
+            <h3>確認したこと</h3>
+            <ul>
+              <li><strong>Swap不足を主因とする証拠はない。</strong>LTM通常4条件の終了時Swap使用量は3.3〜49.9MiB。Uniform・1スレッドのホスト全体のswap-in増分は366ページで、major fault 313,796回より桁違いに少ない。</li>
+              <li><strong>測定区間でチェックポイント・T1分割は発生していない。</strong><code>Checkpoints</code>、<code>T1_Splits</code>、<code>Reorganize_Wait_Duration_us</code> はすべて0。OOMも記録されなかった。</li>
+              <li><strong>CPU実行待ちは小さい。</strong>Uniform・1スレッドのCPU pressureは約1%。メモリpressure fullは4.4%だった。ページ待ちの観測と合わせて判断した。</li>
+            </ul>
+          </div>
+          <div>
+            <h3>今回の結果だけでは断定しないこと</h3>
+            <ul>
+              <li>各条件1回のため、ばらつき・信頼区間は未評価。同じ乱数列を使う較正試行のキャッシュ状態も結果に影響する。</li>
+              <li>カーネルシンボルの参照権限がなく、内部のロック別待ち時間は未計測。T1検索やロック競合が主因である証拠は得られなかったが、すべての競合を否定するものではない。</li>
+              <li>他バリアント・書込み混在・最大96スレッドは未測定。公開側の32スレッドを同じ環境で再現したものではない。デバイスの帯域上限や改善案の効果も未検証。</li>
+            </ul>
+          </div>
+        </div>
+        <p class="note">pressure（PSI）は、CPU・メモリ・I/Oの不足でタスクが停滞した時間の指標。cgroupのPSI、主スレッドの待機サンプル、非CPU時間は測定対象と定義が異なるため、割合を足し合わせることはできない。ホスト全体のswap-inには他プロセスの影響も含まれる。</p>
+      </section>
+
+      <section id="appendix" aria-labelledby="appendix-title">
+        <h2 id="appendix-title"><span class="number">06</span>資料・再現手順</h2>
+        <p>以下は測定の確認・再実行に必要な情報。本文と図表はこのHTMLだけで読める。ソース・生データへの相対リンクは、このファイルをリポジトリ内の元の場所から開く場合に利用できる。</p>
+
+        <details id="environment-details">
+          <summary>環境・対象コミット・データサイズの詳細</summary>
+          <div class="detail-body">
+            <div class="table-wrap" role="region" aria-label="環境比較" tabindex="0">
+              <table>
+                <caption>公開測定と今回のローカル測定</caption>
+                <thead><tr><th scope="col">項目</th><th scope="col">今回</th><th scope="col">公開測定（2026-09-14）</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">コミット</th><td><code>e75746c2d03e0d53edaf566c157aad95172b887c</code><br>＋調査前からの保存先修正</td><td><code>047300bf27de</code></td></tr>
+                  <tr><th scope="row">CPU・RAM</th><td>Xeon Gold 5418N<br>48物理コア / 96論理CPU、RAM 247GiB</td><td>AWS i4i.8xlarge<br>Xeon Platinum 8375C、32 vCPU</td></tr>
+                  <tr><th scope="row">カーネル</th><td><code>5.15.0-186-generic</code></td><td><code>7.0.0-1012-aws</code></td></tr>
+                  <tr><th scope="row">DB保存先</th><td>ext4 / <code>/dev/mapper/vg0-lvhome</code><br>下位デバイスは非回転の <code>sda</code></td><td>Local NVMe SSD</td></tr>
+                  <tr><th scope="row">ビルド</th><td>GCC 13.4 / Release<br><code>-O3 -DNDEBUG</code><br>Google Benchmark 1.8.4</td><td>Release / Google Benchmark 1.8.4</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>既存の <code>build/vmemkv-gcc13/benchmark/bench_kv</code> を再ビルドせず使用した。調査による実装・依存環境・カーネル設定・Swap設定の変更はない。</p>
+            <p class="note">対象バイナリのSHA256：<br><code>a7f02a8c2bcc20175782a2c43febdb9313900625a2cd0c26eb197ec8c9df26ba</code></p>
+            <h3>「倍率8」と実サイズの違い</h3>
+            <p>コーパス件数は算定予算1GiB × 倍率8から求める。ベンチマークの <code>CorpusBytes=8,589,934,080</code> は目標の1024B値を基準にした算定値。20%の8B値を混ぜた後のT2の実使用範囲は、manifest上で <strong>7,030,530,024B（6.55GiB）</strong>だった。</p>
+            <p><code>MemorySwapMax=1TiB</code> は許可上限であり、実Swap容量ではない。今回のホストの実容量は4GiBのまま使用した。</p>
+            <h3>公開値との照合</h3>
+            <p>公開チャートの対象8セルは、<a href="../../../../benchmark_results/2026091416/results_ltm_1KB.json">リポジトリ内のRaw JSON</a>と完全一致。公開1スレッドの +Inline はZipf 26,885、Uniform 9,964 ops/sだった。これらは今回とは別環境の測定値として扱う。</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>観測方法と根拠ファイル</summary>
+          <div class="detail-body">
+            <h3>測定区間の分離</h3>
+            <p>マスターを制限外で一度準備し、各計測は制限内で新しいT2コピーから開始した。<code>observe.py</code> はcgroupの外で動作し、ベンチマークの <code>--v=3</code> が出力する <code>Running ... for N</code> / <code>Ran in ...</code> を境界として観測する。結果の集計には最後の測定区間を用いた。</p>
+            <p>perfは初期化を含む最初の試行では無効化し、その後の試行だけをFIFOで有効化した。CPUは <code>cpu-clock/freq=99/</code>、major faultは <code>major-faults/period=97/</code> をDWARFスタック付きで採取し、最終区間を時刻で抽出した。</p>
+            <p class="note">境界の観測には数ms〜数十msの遅れがあり、並列実行ではGoogle Benchmarkの実行時間と区間スナップショットの幅も約0.2秒異なる。精密なレイテンシ分布ではなく、支配的な待ちと発生先を特定するための計測である。</p>
+            <p>最初のLTM計測前だけ、専用DBファイルに <code>fsync</code> と <code>POSIX_FADV_DONTNEED</code> を実施した。ホスト全体のキャッシュ破棄は行っていない。マスターの初期キャッシュ状態は各回で統一していないが、コピー・索引復元は集計区間から除外した。</p>
+            <h3>ソース上の参照先</h3>
+            <ul class="file-list">
+              <li><a href="../../src/vmemkv_impl.hpp">vmemkv_impl.hpp:317</a> — <code>get_impl()</code>、インライン値の返却、T2読み取りへの分岐。</li>
+              <li><a href="../../src/vmemkv/read_path.hpp">read_path.hpp:103 / 134 / 248</a> — small値のマッピング選択、ヘッダー読込、サイズ判定。</li>
+              <li><a href="../../src/t2_flat_file/t2_flat_file.cpp">t2_flat_file.cpp:146</a> — <code>MAP_SHARED</code> と <code>MADV_RANDOM</code>。過去のMAP_PRIVATE版の調査とは区別する。</li>
+              <li><a href="../../benchmark/bench_kv.cpp">bench_kv.cpp:648 / 1550</a> — 値全体の走査とGet (Hit)ワークロード。</li>
+            </ul>
+            <h3>測定成果物</h3>
+            <p>保存先は <code>build/ltm/results/get-hit-20260922/</code>。生データと観測スクリプトはGit管理外のローカルファイルのため、別ホストで再利用する場合は別途コピーが必要。</p>
+            <ul class="file-list">
+              <li><a href="../../../../build/ltm/results/get-hit-20260922/summary.json">summary.json</a> — 最終区間の集計値。</li>
+              <li><a href="../../../../build/ltm/results/get-hit-20260922/environment.txt">environment.txt</a> / <a href="../../../../build/ltm/results/get-hit-20260922/starting-worktree.patch">starting-worktree.patch</a> — 環境・開始時の差分。</li>
+              <li><a href="../../../../build/ltm/results/get-hit-20260922/ltm-uniform-t1/benchmark.json">benchmark.json（Uniform・1スレッド）</a> / <a href="../../../../build/ltm/results/get-hit-20260922/ltm-uniform-t1/command.json">command.json</a> — ベンチマーク結果と完全な実行条件。</li>
+              <li>各ケースの <code>phases.jsonl</code> / <code>samples.jsonl</code> — 区間前後と0.5秒間隔の生観測。</li>
+              <li><a href="../../../../build/ltm/results/get-hit-20260922/profile-uniform-t1/fault-classification.json">fault-classification.json</a> / <a href="../../../../build/ltm/results/get-hit-20260922/profile-uniform-t1/maps.txt">maps.txt</a> — フォルト先アドレスの分類。 同じディレクトリに <code>perf.data</code>、命令の逆アセンブルも保存。</li>
+              <li><a href="../../../../build/ltm/results/get-hit-20260922/verification.json">verification.json</a> — 6実行の完了、件数・制限値・OOMなし、既存バイナリと開始時差分の保持を確認。</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>再現コマンド（準備済みのローカル環境用）</summary>
+          <div class="detail-body">
+            <p>このホストの準備済みビルド・マスター・観測スクリプトを使う。<code>observe.py</code> が <code>systemd-run --user --scope</code> で制限を適用し、<code>--benchmark_out</code> でJSONを保存する。ケース名は未使用の名前にする。</p>
+            <pre><code>cd /home/wasanemon/project/VMemKV-1K
+source build/ltm/env.sh
+
+python3 build/ltm/results/get-hit-20260922/observe.py rerun-uniform-t1 \
+  --dist Uniform --threads 1 --seconds 12s
+python3 build/ltm/results/get-hit-20260922/observe.py rerun-zipf-t1 \
+  --dist Zipf --threads 1 --seconds 12s
+python3 build/ltm/results/get-hit-20260922/observe.py rerun-uniform-t16 \
+  --dist Uniform --threads 16 --seconds 12s
+python3 build/ltm/results/get-hit-20260922/observe.py rerun-zipf-t16 \
+  --dist Zipf --threads 16 --seconds 12s
+
+# 発生箇所の採取
+python3 build/ltm/results/get-hit-20260922/observe.py rerun-profile \
+  --dist Uniform --threads 1 --seconds 10s --profile
+
+# 同一データでメモリ制約を緩める対照
+python3 build/ltm/results/get-hit-20260922/observe.py rerun-resident \
+  --dist Uniform --threads 1 --seconds 8s \
+  --memory-high 17179869184 --memory-max 34359738368
+
+python3 build/ltm/results/get-hit-20260922/summarize.py</code></pre>
+            <p>初回準備と解析コマンドは <a href="../../../../build/ltm/results/get-hit-20260922/PREPARATION.md">PREPARATION.md</a> に記録。このホストではユーザーバスへの接続が必要なため、計測をサンドボックス外で実行した。</p>
+            <p class="note">既存の <code>analyze_perf.py</code> は今回の <code>profile-uniform-t1/</code> を参照する。別名で再採取したperfを解析する際は、参照するケースディレクトリを合わせる。</p>
+          </div>
+        </details>
+      </section>
+    </main>
+    <footer>
+      <p>VMemKV 1KB LTM Get (Hit) 調査 · 2026-09-22<br>元の作業記録：<a href="20260922_1kb_ltm_get_hit_bottleneck.md">Markdown版</a>。本文・図表・スタイルを1ファイルに収録。外部ライブラリ・外部フォントは使用していない。</p>
+      <p class="print-only">公開レポート：https://vmemkv.pages.dev/2026091416_charts.html</p>
+    </footer>
+  </div>
+  <script>
+    (() => {
+      const details = Array.from(document.querySelectorAll('details'));
+      let previousState = null;
+      document.getElementById('print-button').addEventListener('click', () => window.print());
+      window.addEventListener('beforeprint', () => {
+        if (previousState === null) previousState = details.map(item => item.open);
+        details.forEach(item => { item.open = true; });
+      });
+      window.addEventListener('afterprint', () => {
+        if (previousState !== null) details.forEach((item, i) => { item.open = previousState[i]; });
+        previousState = null;
+      });
+      function revealAnchor() {
+        if (!window.location.hash) return;
+        const target = document.getElementById(window.location.hash.slice(1));
+        if (target && target.tagName === 'DETAILS') target.open = true;
+      }
+      window.addEventListener('hashchange', revealAnchor);
+      revealAnchor();
+    })();
+  </script>
+</body>
+</html>

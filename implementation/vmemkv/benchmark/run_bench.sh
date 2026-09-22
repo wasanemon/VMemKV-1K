@@ -9,7 +9,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 IMPL_ROOT="$REPO_ROOT/implementation/vmemkv"
 
 # Shared matrix and helpers.
@@ -78,6 +78,8 @@ while [[ $# -gt 0 ]]; do
       echo "                    don't rely on it to prove swap behavior without checking."
       echo "  --output <F>      Save raw JSON output to file"
       echo "  --no-log          Disable automatic logging"
+      echo "  Environment: VMEMKV_DB_DIR (DB files), TMPDIR (temporary files),"
+      echo "               VMEMKV_BENCH_RESULTS_DIR (JSON results and YCSB timelines)"
       exit 0 ;;
     *) echo "Unknown option: $1" >&2; exit 1 ;;
   esac
@@ -89,6 +91,20 @@ case "$SCENARIO_LIMIT" in
 esac
 
 cd "$REPO_ROOT"
+
+# Resolve paths before invoking helpers or entering a systemd scope.
+export VMEMKV_DB_DIR="${VMEMKV_DB_DIR:-$REPO_ROOT}"
+export TMPDIR="${TMPDIR:-/tmp}"
+mkdir -p "$VMEMKV_DB_DIR" "$TMPDIR"
+VMEMKV_DB_DIR="$(cd "$VMEMKV_DB_DIR" && pwd)"
+TMPDIR="$(cd "$TMPDIR" && pwd)"
+if [[ -n "${VMEMKV_BENCH_RESULTS_DIR:-}" ]]; then
+  mkdir -p "$VMEMKV_BENCH_RESULTS_DIR"
+  export VMEMKV_BENCH_RESULTS_DIR="$(cd "$VMEMKV_BENCH_RESULTS_DIR" && pwd)"
+fi
+if [[ "$BUILD_DIR" != /* ]]; then
+  BUILD_DIR="$REPO_ROOT/$BUILD_DIR"
+fi
 
 if [[ -t 1 ]]; then
   export VMEMKV_COLOR=1
@@ -124,10 +140,10 @@ echo "Building benchmark binary..."
 vmemkv_build_bench "$IMPL_ROOT" "$BUILD_DIR" "$BUILD_TYPE" "$ENABLE_ROCKSDB" -DENABLE_LMDB="$ENABLE_LMDB" -DENABLE_LEANSTORE="$ENABLE_LEANSTORE" >/dev/null
 echo "Build completed."
 
-BENCH_BIN="$REPO_ROOT/$BUILD_DIR/benchmark/bench_kv"
+BENCH_BIN="$BUILD_DIR/benchmark/bench_kv"
 
 # ── Auto log file setup ──────────────────────────────────────────────────
-LOG_DIR="$SCRIPT_DIR/logs"
+LOG_DIR="${VMEMKV_BENCH_RESULTS_DIR:-$SCRIPT_DIR/logs}"
 if [[ "$AUTO_LOG" == "true" ]]; then
   TIMESTAMP="$(date +%Y%m%d_%H%M%S)"
   ROCKSDB_SUFFIX="$([ "$ENABLE_ROCKSDB" == "ON" ] && echo "rocksdb" || echo "no_rocksdb")"
@@ -143,6 +159,7 @@ run_local_scenario() {
   local filter
   local temp_json
   local progress_state
+  local priming_json=""
   local auto_log_file=""
 
   scenario_env_prefix="$(vmemkv_matrix::scenario_env_prefix "$scenario_key")"
@@ -193,10 +210,9 @@ run_local_scenario() {
 
   echo "=== Scenario: $scenario_key (target_ratio=$target_profile) ==="
 
-  progress_state="$(mktemp /tmp/vmemkv_local_progress.XXXXXX)"
-  temp_json="$(mktemp /tmp/vmemkv_bench_results.XXXXXX.json)"
-  # shellcheck disable=SC2064
-  trap "rm -f '$progress_state' '$temp_json'" RETURN
+  progress_state="$(mktemp "$TMPDIR/vmemkv_local_progress.XXXXXX")"
+  temp_json="$(mktemp "$TMPDIR/vmemkv_bench_results.XXXXXX.json")"
+  trap 'rm -f -- "$progress_state" "$temp_json" "${priming_json:-}"' RETURN
 
   local -a bench_stdout_wrapper=()
   if command -v stdbuf >/dev/null 2>&1; then
@@ -205,7 +221,7 @@ run_local_scenario() {
 
   echo "Counting benchmarks..."
   local total_benchmarks
-  total_benchmarks="$(env $scenario_env_prefix ${scenario_runtime_env:+$scenario_runtime_env} "$BENCH_BIN" --benchmark_list_tests --benchmark_filter="${filter}" 2>/dev/null | awk 'NF { c++ } END { print c + 0 }')"
+  total_benchmarks="$(env $scenario_env_prefix ${scenario_runtime_env:+$scenario_runtime_env} VMEMKV_BENCH_SKIP_CLEANUP=1 "$BENCH_BIN" --benchmark_list_tests --benchmark_filter="${filter}" 2>/dev/null | awk 'NF { c++ } END { print c + 0 }')"
   if [[ "$total_benchmarks" -eq 0 ]]; then
     echo "Failed to match any benchmarks against regex: ${filter}" >&2
     return 1
@@ -222,10 +238,8 @@ run_local_scenario() {
       # automatic sweeps don't fight a deliberate multi-store, multi-master-generation priming
       # pass. That means *this* script owns the "start from a clean slate" step neither of those
       # invocations will do on their own -- do it once, here, unconditionally, exactly like
-      # bench_kv's own startup sweep normally would (same "bench_" prefix, same directory: this
-      # script never sets VMEMKV_DB_DIR, so bench_kv defaults to ".", i.e. $REPO_ROOT after the
-      # `cd "$REPO_ROOT"` above).
-      find "$REPO_ROOT" -maxdepth 1 -name 'bench_*' -exec rm -rf {} +
+      # bench_kv's own startup sweep normally would (same "bench_" prefix and DB directory).
+      find "$VMEMKV_DB_DIR" -mindepth 1 -maxdepth 1 -name 'bench_*' -exec rm -rf -- {} +
 
       # Prime every shared master corpus this run will need at full, unconstrained disk speed
       # *before* entering the cgroup below. Without this, a real per-master populate under this
@@ -234,9 +248,9 @@ run_local_scenario() {
       # those masters. See vmemkv_matrix::ltm_priming_filter()'s comment for what this
       # single-cell-per-(store,value size) filter does and does not cover.
       echo "Priming LTM master corpora (unconstrained) before entering the cgroup..."
-      local priming_filter priming_json
+      local priming_filter
       priming_filter="$(vmemkv_matrix::ltm_priming_filter)"
-      priming_json="$(mktemp /tmp/vmemkv_ltm_priming.XXXXXX.json)"
+      priming_json="$(mktemp "$TMPDIR/vmemkv_ltm_priming.XXXXXX.json")"
       env $scenario_env_prefix ${scenario_runtime_env:+$scenario_runtime_env} VMEMKV_BENCH_SKIP_CLEANUP=1 \
         "$SCRIPT_DIR/common/run_scenario.sh" "$BENCH_BIN" "$priming_filter" "$MIN_TIME" "$priming_json" \
         >/dev/null

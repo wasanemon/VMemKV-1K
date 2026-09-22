@@ -53,6 +53,30 @@ Benchmark rows are encoded as flat `key=value` segments so the raw Google Benchm
 The current benchmark matrix uses `8B`/`1KB` for in-memory runs and `1KB`/`64KB` for LTM runs.
 `bench_kv` derives the baseline from the effective machine memory limit (`cgroup` when present, otherwise `/proc/meminfo`). The AWS runner places LTM benchmark runs in a 1GiB cgroup so the corpus is scaled from that budget.
 
+## ローカル実験の保存先
+
+`run_bench.sh` は次の環境変数に対応する。相対パスはリポジトリルート基準。
+
+| 環境変数 | 用途 | 未指定時 |
+| --- | --- | --- |
+| `VMEMKV_DB_DIR` | DB・WAL・チェックポイント | リポジトリルート |
+| `TMPDIR` | 進捗・測定結果・LTM事前準備の一時ファイル | `/tmp` |
+| `VMEMKV_BENCH_RESULTS_DIR` | 測定JSONの自動保存・YCSBタイムライン | 測定JSONは `benchmark/logs`、タイムラインは一時ディレクトリ |
+
+各ディレクトリはランナーが作成する。`--no-log` は測定JSONの自動保存を無効にし、
+`--output` は追加の保存先を指定する。`bench_kv` の直接実行では測定JSONに
+`--benchmark_out` の指定が必要。DB保存先の直下にある `bench_*` は実験時の掃除対象なので、
+専用ディレクトリを使う。Swapの保存先・容量はこれらの設定では変更されない。
+
+リポジトリルートでの設定例（設定のみで計測は開始しない）:
+
+```bash
+export VMEMKV_DB_DIR="$PWD/build/ltm/data"
+export TMPDIR="$PWD/build/ltm/tmp"
+export VMEMKV_BENCH_RESULTS_DIR="$PWD/build/ltm/results"
+mkdir -p "$VMEMKV_DB_DIR" "$TMPDIR" "$VMEMKV_BENCH_RESULTS_DIR"
+```
+
 ## How to Extend
 
 - Add or adjust benchmark families in `bench_kv.cpp`.

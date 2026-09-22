@@ -1,0 +1,894 @@
+{
+  "measured_directory": "build/ltm/results/page-residency-snapshot-20260923",
+  "metadata": {
+    "provenance.json": {
+      "commit": "e75746c2d03e0d53edaf566c157aad95172b887c",
+      "branch": "codex/page-residency-snapshot",
+      "kernel": "5.15.0-186-generic",
+      "sha256": {
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_page_residency_snapshot.py": "96bf52b0909ef6d8fb2590bd83d57aaf1c3379d3c0983603c2bc961e4c3a5260",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/page_residency_snapshot.hpp": "c42431eb60af06521bf1567473fcb6aaa98f2824e44b59bee3be2a0689b61727",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/page_residency_snapshot_benchmark.inc": "ab79e7d52bde77befadb220a8479adafae2d458f88587de62f9d09b444e1e8ac",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/page_residency_loader.py": "ccdaea508658e75bd3b7653b04d709034e1b18a39ec7031ba5a170aa2545803a",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-bitmap-20260923/page_residency_bitmap.bpf.o": "3fdd9d9550159749ce8c6898fe69d7acf174d7959dd942394917b36852981535",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/source/proposal1/src/vmemkv/read_path.hpp": "be5e00e319c84a7f34fa69b0d8a402eb409f8efb728a803e6f6a36b8dc896432",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/source/proposal1/fixed_pread_benchmark.cpp": "84778659fb793bf7faca1362ca4c13b817e975e5eaacf80e21d72ed2a47464e8",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/source/bitmap/src/vmemkv/page_residency_hints.hpp": "3ec6f26a7225f49876c112c680b9925c439c83aaddc12d8ca25605fb5dfef9f1",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/source/bitmap/src/vmemkv/read_path.hpp": "fb4e4c0377ca76b06fb6bdb1ffd455b51698743ae64542d622d63b19ba31c6c7",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/source/bitmap/fixed_pread_benchmark.cpp": "84778659fb793bf7faca1362ca4c13b817e975e5eaacf80e21d72ed2a47464e8",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/proposal1": "324af43408adad7ec442f234540aad541db46c1f0a468b5d5a9e9c4139ab97e8",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/bitmap": "96c59c38c5aa9839ebce90dfafff8a17f01d54a59bd593dcefa825c6c4b9b10d",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/count-snapshot": "750c13694f4c4ed50decfaf355eb11ded448e5a0345a8761fcccd4e0fddb6bdf"
+      },
+      "note": "製品ソースは案1のみ。空/初期スナップショットは同じバイナリ。計数は別バイナリ。"
+    },
+    "build-commands.json": [
+      [
+        "g++-13",
+        "-std=gnu++23",
+        "-O3",
+        "-DNDEBUG",
+        "-DBENCHMARK_STATIC_DEFINE",
+        "-pthread",
+        "-I/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/source/proposal1/include",
+        "-I/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/source/proposal1/src",
+        "-I/home/wasanemon/project/VMemKV-1K/build/vmemkv-gcc13/_deps/google_benchmark-src/include",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/source/proposal1/fixed_pread_benchmark.cpp",
+        "/home/wasanemon/project/VMemKV-1K/build/vmemkv-gcc13/libvmemkv.a",
+        "/home/wasanemon/project/VMemKV-1K/build/vmemkv-gcc13/_deps/google_benchmark-build/src/libbenchmark.a",
+        "-ltbb",
+        "-o",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/proposal1"
+      ],
+      [
+        "g++-13",
+        "-DSNAPSHOT_HINTS",
+        "-std=gnu++23",
+        "-O3",
+        "-DNDEBUG",
+        "-DBENCHMARK_STATIC_DEFINE",
+        "-pthread",
+        "-I/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/source/bitmap/include",
+        "-I/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/source/bitmap/src",
+        "-I/home/wasanemon/project/VMemKV-1K/build/vmemkv-gcc13/_deps/google_benchmark-src/include",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/source/bitmap/fixed_pread_benchmark.cpp",
+        "/home/wasanemon/project/VMemKV-1K/build/vmemkv-gcc13/libvmemkv.a",
+        "/home/wasanemon/project/VMemKV-1K/build/vmemkv-gcc13/_deps/google_benchmark-build/src/libbenchmark.a",
+        "-ltbb",
+        "-o",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/bitmap"
+      ],
+      [
+        "g++-13",
+        "-DSNAPSHOT_COUNTERS",
+        "-DSNAPSHOT_HINTS",
+        "-std=gnu++23",
+        "-O3",
+        "-DNDEBUG",
+        "-DBENCHMARK_STATIC_DEFINE",
+        "-pthread",
+        "-I/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/source/bitmap/include",
+        "-I/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/source/bitmap/src",
+        "-I/home/wasanemon/project/VMemKV-1K/build/vmemkv-gcc13/_deps/google_benchmark-src/include",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/source/bitmap/fixed_pread_benchmark.cpp",
+        "/home/wasanemon/project/VMemKV-1K/build/vmemkv-gcc13/libvmemkv.a",
+        "/home/wasanemon/project/VMemKV-1K/build/vmemkv-gcc13/_deps/google_benchmark-build/src/libbenchmark.a",
+        "-ltbb",
+        "-o",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/count-snapshot"
+      ]
+    ]
+  },
+  "runs": {
+    "diagnostic-snapshot": {
+      "command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/count-snapshot",
+          "snapshot"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/runs/diagnostic-snapshot",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp",
+          "PAGE_HINT_FD": "5",
+          "PAGE_HINT_PAGES": "1716438"
+        }
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8585216,
+        "after_current": 9289728,
+        "body_bytes": 643680,
+        "bpf_load_seconds": 0.002190813422203064
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-snapshot-aae0de2a9f94.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "result.json": {
+        "variant": "snapshot",
+        "gets": 1000000,
+        "snapshot_seconds": 0.005155744,
+        "hint_attach_seconds": 3.6115e-05,
+        "snapshot_calls": 1677,
+        "snapshot_resident_pages": 1716438,
+        "known_before": 1716438,
+        "known_after": 1716438,
+        "events_during_gets": 0,
+        "diagnostic": true,
+        "target_gets": 208357,
+        "mincore_skipped": 208357,
+        "value_check": true,
+        "bpf_load_seconds": 0.002190813422203064,
+        "skip_percent": 100.0
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-snapshot-aae0de2a9f94",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_page_residency_snapshot.py",
+        "case",
+        "--name",
+        "diagnostic-snapshot",
+        "--variant",
+        "snapshot",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016",
+        "--diagnostic"
+      ],
+      "scope-exit.json": {
+        "code": 0
+      }
+    },
+    "r1-empty": {
+      "command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/bitmap",
+          "empty"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/runs/r1-empty",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp",
+          "PAGE_HINT_FD": "5",
+          "PAGE_HINT_PAGES": "1716438"
+        }
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8581120,
+        "after_current": 9289728,
+        "body_bytes": 643680,
+        "bpf_load_seconds": 0.002553662285208702
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-snapshot-04c650db4143.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "result.json": {
+        "variant": "empty",
+        "gets": 1000000,
+        "snapshot_seconds": 0,
+        "hint_attach_seconds": 3.5933e-05,
+        "snapshot_calls": 0,
+        "snapshot_resident_pages": 0,
+        "known_before": 0,
+        "known_after": 370908,
+        "events_during_gets": 0,
+        "get_seconds": 3.174280336,
+        "ops_per_second": 315032.036918,
+        "snapshot_plus_get_seconds": 3.174280336,
+        "value_check": true,
+        "bpf_load_seconds": 0.002553662285208702,
+        "incremental_setup_plus_get_seconds": 3.1768699312852084
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-snapshot-04c650db4143",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_page_residency_snapshot.py",
+        "case",
+        "--name",
+        "r1-empty",
+        "--variant",
+        "empty",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016"
+      ],
+      "scope-exit.json": {
+        "code": 0
+      }
+    },
+    "r1-proposal1": {
+      "command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/proposal1",
+          "proposal1"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/runs/r1-proposal1",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp"
+        }
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8577024,
+        "after_current": 8577024,
+        "body_bytes": 0,
+        "bpf_load_seconds": 0
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-snapshot-a06bf9f3e7fc.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "result.json": {
+        "variant": "proposal1",
+        "gets": 1000000,
+        "snapshot_seconds": 0,
+        "hint_attach_seconds": 0,
+        "snapshot_calls": 0,
+        "snapshot_resident_pages": 0,
+        "known_before": 0,
+        "known_after": 0,
+        "events_during_gets": 0,
+        "get_seconds": 3.146410288,
+        "ops_per_second": 317822.505162,
+        "snapshot_plus_get_seconds": 3.146410288,
+        "value_check": true,
+        "bpf_load_seconds": 0,
+        "incremental_setup_plus_get_seconds": 3.146410288
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-snapshot-a06bf9f3e7fc",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_page_residency_snapshot.py",
+        "case",
+        "--name",
+        "r1-proposal1",
+        "--variant",
+        "proposal1",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016"
+      ],
+      "scope-exit.json": {
+        "code": 0
+      }
+    },
+    "r1-snapshot": {
+      "command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/bitmap",
+          "snapshot"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/runs/r1-snapshot",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp",
+          "PAGE_HINT_FD": "5",
+          "PAGE_HINT_PAGES": "1716438"
+        }
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8585216,
+        "after_current": 9293824,
+        "body_bytes": 643680,
+        "bpf_load_seconds": 0.0019367700442671776
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-snapshot-1a535ae17757.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "result.json": {
+        "variant": "snapshot",
+        "gets": 1000000,
+        "snapshot_seconds": 0.005148681,
+        "hint_attach_seconds": 3.7058e-05,
+        "snapshot_calls": 1677,
+        "snapshot_resident_pages": 1716438,
+        "known_before": 1716438,
+        "known_after": 1716438,
+        "events_during_gets": 0,
+        "get_seconds": 3.046539302,
+        "ops_per_second": 328241.29311,
+        "snapshot_plus_get_seconds": 3.051687983,
+        "value_check": true,
+        "bpf_load_seconds": 0.0019367700442671776,
+        "incremental_setup_plus_get_seconds": 3.0536618110442673
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-snapshot-1a535ae17757",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_page_residency_snapshot.py",
+        "case",
+        "--name",
+        "r1-snapshot",
+        "--variant",
+        "snapshot",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016"
+      ],
+      "scope-exit.json": {
+        "code": 0
+      }
+    },
+    "r2-empty": {
+      "command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/bitmap",
+          "empty"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/runs/r2-empty",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp",
+          "PAGE_HINT_FD": "5",
+          "PAGE_HINT_PAGES": "1716438"
+        }
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8593408,
+        "after_current": 9302016,
+        "body_bytes": 643680,
+        "bpf_load_seconds": 0.001958058215677738
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-snapshot-518b27bc5232.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "result.json": {
+        "variant": "empty",
+        "gets": 1000000,
+        "snapshot_seconds": 0,
+        "hint_attach_seconds": 3.5266e-05,
+        "snapshot_calls": 0,
+        "snapshot_resident_pages": 0,
+        "known_before": 0,
+        "known_after": 370908,
+        "events_during_gets": 0,
+        "get_seconds": 3.182396719,
+        "ops_per_second": 314228.579369,
+        "snapshot_plus_get_seconds": 3.182396719,
+        "value_check": true,
+        "bpf_load_seconds": 0.001958058215677738,
+        "incremental_setup_plus_get_seconds": 3.1843900432156778
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-snapshot-518b27bc5232",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_page_residency_snapshot.py",
+        "case",
+        "--name",
+        "r2-empty",
+        "--variant",
+        "empty",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016"
+      ],
+      "scope-exit.json": {
+        "code": 0
+      }
+    },
+    "r2-proposal1": {
+      "command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/proposal1",
+          "proposal1"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/runs/r2-proposal1",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp"
+        }
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8564736,
+        "after_current": 8564736,
+        "body_bytes": 0,
+        "bpf_load_seconds": 0
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-snapshot-721c33b0f81d.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "result.json": {
+        "variant": "proposal1",
+        "gets": 1000000,
+        "snapshot_seconds": 0,
+        "hint_attach_seconds": 0,
+        "snapshot_calls": 0,
+        "snapshot_resident_pages": 0,
+        "known_before": 0,
+        "known_after": 0,
+        "events_during_gets": 0,
+        "get_seconds": 3.148661456,
+        "ops_per_second": 317595.274682,
+        "snapshot_plus_get_seconds": 3.148661456,
+        "value_check": true,
+        "bpf_load_seconds": 0,
+        "incremental_setup_plus_get_seconds": 3.148661456
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-snapshot-721c33b0f81d",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_page_residency_snapshot.py",
+        "case",
+        "--name",
+        "r2-proposal1",
+        "--variant",
+        "proposal1",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016"
+      ],
+      "scope-exit.json": {
+        "code": 0
+      }
+    },
+    "r2-snapshot": {
+      "command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/bitmap",
+          "snapshot"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/runs/r2-snapshot",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp",
+          "PAGE_HINT_FD": "5",
+          "PAGE_HINT_PAGES": "1716438"
+        }
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8593408,
+        "after_current": 9302016,
+        "body_bytes": 643680,
+        "bpf_load_seconds": 0.001959088258445263
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-snapshot-a84fc4b18d90.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "result.json": {
+        "variant": "snapshot",
+        "gets": 1000000,
+        "snapshot_seconds": 0.005146509,
+        "hint_attach_seconds": 3.6342e-05,
+        "snapshot_calls": 1677,
+        "snapshot_resident_pages": 1716438,
+        "known_before": 1716438,
+        "known_after": 1716438,
+        "events_during_gets": 0,
+        "get_seconds": 3.043760748,
+        "ops_per_second": 328540.934322,
+        "snapshot_plus_get_seconds": 3.048907257,
+        "value_check": true,
+        "bpf_load_seconds": 0.001959088258445263,
+        "incremental_setup_plus_get_seconds": 3.0509026872584455
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-snapshot-a84fc4b18d90",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_page_residency_snapshot.py",
+        "case",
+        "--name",
+        "r2-snapshot",
+        "--variant",
+        "snapshot",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016"
+      ],
+      "scope-exit.json": {
+        "code": 0
+      }
+    }
+  },
+  "summary.json": {
+    "means": {
+      "proposal1": {
+        "ops_per_second": 317708.889922,
+        "get_seconds": 3.147535872,
+        "snapshot_seconds": 0,
+        "snapshot_plus_get_seconds": 3.147535872,
+        "incremental_setup_plus_get_seconds": 3.147535872,
+        "vs_proposal1_percent": 0.0
+      },
+      "empty": {
+        "ops_per_second": 314630.3081435,
+        "get_seconds": 3.1783385275000002,
+        "snapshot_seconds": 0,
+        "snapshot_plus_get_seconds": 3.1783385275000002,
+        "incremental_setup_plus_get_seconds": 3.180629987250443,
+        "vs_proposal1_percent": -0.9689945343536954
+      },
+      "snapshot": {
+        "ops_per_second": 328391.113716,
+        "get_seconds": 3.045150025,
+        "snapshot_seconds": 0.005147595,
+        "snapshot_plus_get_seconds": 3.0502976200000003,
+        "incremental_setup_plus_get_seconds": 3.0522822491513564,
+        "vs_proposal1_percent": 3.362267828458476
+      }
+    },
+    "raw": {
+      "proposal1": [
+        {
+          "variant": "proposal1",
+          "gets": 1000000,
+          "snapshot_seconds": 0,
+          "hint_attach_seconds": 0,
+          "snapshot_calls": 0,
+          "snapshot_resident_pages": 0,
+          "known_before": 0,
+          "known_after": 0,
+          "events_during_gets": 0,
+          "get_seconds": 3.146410288,
+          "ops_per_second": 317822.505162,
+          "snapshot_plus_get_seconds": 3.146410288,
+          "value_check": true,
+          "bpf_load_seconds": 0,
+          "incremental_setup_plus_get_seconds": 3.146410288
+        },
+        {
+          "variant": "proposal1",
+          "gets": 1000000,
+          "snapshot_seconds": 0,
+          "hint_attach_seconds": 0,
+          "snapshot_calls": 0,
+          "snapshot_resident_pages": 0,
+          "known_before": 0,
+          "known_after": 0,
+          "events_during_gets": 0,
+          "get_seconds": 3.148661456,
+          "ops_per_second": 317595.274682,
+          "snapshot_plus_get_seconds": 3.148661456,
+          "value_check": true,
+          "bpf_load_seconds": 0,
+          "incremental_setup_plus_get_seconds": 3.148661456
+        }
+      ],
+      "empty": [
+        {
+          "variant": "empty",
+          "gets": 1000000,
+          "snapshot_seconds": 0,
+          "hint_attach_seconds": 3.5933e-05,
+          "snapshot_calls": 0,
+          "snapshot_resident_pages": 0,
+          "known_before": 0,
+          "known_after": 370908,
+          "events_during_gets": 0,
+          "get_seconds": 3.174280336,
+          "ops_per_second": 315032.036918,
+          "snapshot_plus_get_seconds": 3.174280336,
+          "value_check": true,
+          "bpf_load_seconds": 0.002553662285208702,
+          "incremental_setup_plus_get_seconds": 3.1768699312852084
+        },
+        {
+          "variant": "empty",
+          "gets": 1000000,
+          "snapshot_seconds": 0,
+          "hint_attach_seconds": 3.5266e-05,
+          "snapshot_calls": 0,
+          "snapshot_resident_pages": 0,
+          "known_before": 0,
+          "known_after": 370908,
+          "events_during_gets": 0,
+          "get_seconds": 3.182396719,
+          "ops_per_second": 314228.579369,
+          "snapshot_plus_get_seconds": 3.182396719,
+          "value_check": true,
+          "bpf_load_seconds": 0.001958058215677738,
+          "incremental_setup_plus_get_seconds": 3.1843900432156778
+        }
+      ],
+      "snapshot": [
+        {
+          "variant": "snapshot",
+          "gets": 1000000,
+          "snapshot_seconds": 0.005148681,
+          "hint_attach_seconds": 3.7058e-05,
+          "snapshot_calls": 1677,
+          "snapshot_resident_pages": 1716438,
+          "known_before": 1716438,
+          "known_after": 1716438,
+          "events_during_gets": 0,
+          "get_seconds": 3.046539302,
+          "ops_per_second": 328241.29311,
+          "snapshot_plus_get_seconds": 3.051687983,
+          "value_check": true,
+          "bpf_load_seconds": 0.0019367700442671776,
+          "incremental_setup_plus_get_seconds": 3.0536618110442673
+        },
+        {
+          "variant": "snapshot",
+          "gets": 1000000,
+          "snapshot_seconds": 0.005146509,
+          "hint_attach_seconds": 3.6342e-05,
+          "snapshot_calls": 1677,
+          "snapshot_resident_pages": 1716438,
+          "known_before": 1716438,
+          "known_after": 1716438,
+          "events_during_gets": 0,
+          "get_seconds": 3.043760748,
+          "ops_per_second": 328540.934322,
+          "snapshot_plus_get_seconds": 3.048907257,
+          "value_check": true,
+          "bpf_load_seconds": 0.001959088258445263,
+          "incremental_setup_plus_get_seconds": 3.0509026872584455
+        }
+      ]
+    },
+    "diagnostic": {
+      "variant": "snapshot",
+      "gets": 1000000,
+      "snapshot_seconds": 0.005155744,
+      "hint_attach_seconds": 3.6115e-05,
+      "snapshot_calls": 1677,
+      "snapshot_resident_pages": 1716438,
+      "known_before": 1716438,
+      "known_after": 1716438,
+      "events_during_gets": 0,
+      "diagnostic": true,
+      "target_gets": 208357,
+      "mincore_skipped": 208357,
+      "value_check": true,
+      "bpf_load_seconds": 0.002190813422203064,
+      "skip_percent": 100.0
+    }
+  },
+  "plan.json": {
+    "scenario": "resident",
+    "distribution": "Uniform",
+    "threads": 1,
+    "cpu": 0,
+    "variants": [
+      "proposal1",
+      "empty",
+      "snapshot"
+    ],
+    "repetitions": 2,
+    "gets_per_run": 1000000,
+    "seed": 42,
+    "separate_diagnostic_runs": 1,
+    "snapshot_chunk_pages": 1024,
+    "note": "T2とPTEを事前常駐。固定回数・GB較正なし。初期化時間とGet時間を分離。性能実行はカウンターなし。"
+  },
+  "event-formats.json": {
+    "mm_filemap_add_to_page_cache": "name: mm_filemap_add_to_page_cache\nID: 498\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:unsigned long pfn;\toffset:8;\tsize:8;\tsigned:0;\n\tfield:unsigned long i_ino;\toffset:16;\tsize:8;\tsigned:0;\n\tfield:unsigned long index;\toffset:24;\tsize:8;\tsigned:0;\n\tfield:dev_t s_dev;\toffset:32;\tsize:4;\tsigned:0;\n\nprint fmt: \"dev %d:%d ino %lx page=%p pfn=0x%lx ofs=%lu\", ((unsigned int) ((REC->s_dev) >> 20)), ((unsigned int) ((REC->s_dev) & ((1U << 20) - 1))), REC->i_ino, (((struct page *)vmemmap_base) + (REC->pfn)), REC->pfn, REC->index << 12\n",
+    "mm_filemap_delete_from_page_cache": "name: mm_filemap_delete_from_page_cache\nID: 499\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:unsigned long pfn;\toffset:8;\tsize:8;\tsigned:0;\n\tfield:unsigned long i_ino;\toffset:16;\tsize:8;\tsigned:0;\n\tfield:unsigned long index;\toffset:24;\tsize:8;\tsigned:0;\n\tfield:dev_t s_dev;\toffset:32;\tsize:4;\tsigned:0;\n\nprint fmt: \"dev %d:%d ino %lx page=%p pfn=0x%lx ofs=%lu\", ((unsigned int) ((REC->s_dev) >> 20)), ((unsigned int) ((REC->s_dev) & ((1U << 20) - 1))), REC->i_ino, (((struct page *)vmemmap_base) + (REC->pfn)), REC->pfn, REC->index << 12\n"
+  }
+}

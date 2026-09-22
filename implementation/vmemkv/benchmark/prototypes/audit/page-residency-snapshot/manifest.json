@@ -1,0 +1,57 @@
+{
+  "source_base_commit": "e75746c2d03e0d53edaf566c157aad95172b887c",
+  "files": [
+    {
+      "file": "source/original/read_path.hpp",
+      "measured_source": "build/ltm/results/resident-mincore-diagnosis-20260923/source/original/src/vmemkv/read_path.hpp",
+      "sha256": "32c2f834df7ac5ed8dc9cb92cc40318a6ca8179f2ea79e0a532559a9ac3dd7f0"
+    },
+    {
+      "file": "source/original/fixed_pread_benchmark.cpp",
+      "measured_source": "build/ltm/results/resident-mincore-diagnosis-20260923/source/original/fixed_pread_benchmark.cpp",
+      "sha256": "e087ca205b500d0f7db3ee2fd4cae36f2edc05662e188839fa2b54c640e96c2a"
+    },
+    {
+      "file": "source/proposal1/read_path.hpp",
+      "measured_source": "build/ltm/results/page-residency-snapshot-20260923/matrix/source/proposal1/src/vmemkv/read_path.hpp",
+      "sha256": "be5e00e319c84a7f34fa69b0d8a402eb409f8efb728a803e6f6a36b8dc896432"
+    },
+    {
+      "file": "source/proposal1/fixed_pread_benchmark.cpp",
+      "measured_source": "build/ltm/results/page-residency-snapshot-20260923/matrix/source/proposal1/fixed_pread_benchmark.cpp",
+      "sha256": "e087ca205b500d0f7db3ee2fd4cae36f2edc05662e188839fa2b54c640e96c2a"
+    },
+    {
+      "file": "source/snapshot/read_path.hpp",
+      "measured_source": "build/ltm/results/page-residency-snapshot-20260923/matrix/source/snapshot/src/vmemkv/read_path.hpp",
+      "sha256": "cb68ebc71174cdff8de6c98566334bffd6d108ff4aa1056782216d9731416aec"
+    },
+    {
+      "file": "source/snapshot/fixed_pread_benchmark.cpp",
+      "measured_source": "build/ltm/results/page-residency-snapshot-20260923/matrix/source/snapshot/fixed_pread_benchmark.cpp",
+      "sha256": "5ce9603d7de8261c75d4a86811ed2c0108b32beb3f807d7b902f2fb58a8cbf61"
+    },
+    {
+      "file": "source/snapshot/page_residency_hints.hpp",
+      "measured_source": "build/ltm/results/page-residency-snapshot-20260923/matrix/source/snapshot/src/vmemkv/page_residency_hints.hpp",
+      "sha256": "3ec6f26a7225f49876c112c680b9925c439c83aaddc12d8ca25605fb5dfef9f1"
+    },
+    {
+      "file": "source/snapshot/page_residency_snapshot.hpp",
+      "measured_source": "build/ltm/results/page-residency-snapshot-20260923/matrix/source/snapshot/src/vmemkv/page_residency_snapshot.hpp",
+      "sha256": "c42431eb60af06521bf1567473fcb6aaa98f2824e44b59bee3be2a0689b61727"
+    },
+    {
+      "file": "source/bench_kv.cpp",
+      "measured_source": "build/ltm/results/page-residency-snapshot-20260923/matrix/source/proposal1/bench_kv.cpp",
+      "sha256": "b5613ef8d93aae07fcf2633b380a77daa46be530eda3f796fb27c9d0b70d924c"
+    },
+    {
+      "file": "source/fixed-count/fixed_pread_benchmark.cpp",
+      "measured_source": "build/ltm/results/page-residency-snapshot-20260923/source/bitmap/fixed_pread_benchmark.cpp",
+      "sha256": "84778659fb793bf7faca1362ca4c13b817e975e5eaacf80e21d72ed2a47464e8"
+    }
+  ],
+  "dependency_check": "未収録のsrc/includeは同ブランチ製品ツリーと一致。BPF/loader/生成スクリプトは../../以下を参照。",
+  "note": "履歴JSONの絶対パス・ブランチ・未コミット記録は測定当時のもの。バイナリ/DB/全旧実験ソースは未収録。"
+}

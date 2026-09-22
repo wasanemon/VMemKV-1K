@@ -1,0 +1,2917 @@
+{
+  "measured_directory": "build/ltm/results/page-residency-snapshot-20260923/original-resident",
+  "metadata": {
+    "provenance.json": {
+      "sha256": {
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/resident-mincore-diagnosis-20260923/original": "385d99206fc61b7c721b8f3de4c28d75e37e1cd3f6adc76ad9acf3ac103dad76",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/matrix/snapshot": "763ac24d21d820130092ead41ab415faf4f9618b8f0b85bcf556f14078ff3b2e",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_snapshot_original_resident.py": "496f083141e30a5a2826ce95b3d779655e72afc928686d216f7d720275415f88"
+      },
+      "original_provenance": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/resident-mincore-diagnosis-20260923/provenance.json",
+      "snapshot_provenance": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/matrix/provenance.json",
+      "commit": "e75746c2d03e0d53edaf566c157aad95172b887c",
+      "branch": "codex/page-residency-snapshot",
+      "note": "再実装・再ビルドなし。元実装と案1の保存ソースはGet条件式以外同一、harnessも同一と確認。過去の絶対速度は合算しない。"
+    }
+  },
+  "runs": {
+    "r1-resident-Uniform-t1-original": {
+      "benchmark-command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/original",
+          "--benchmark_filter=^Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=.*threads:1$",
+          "--benchmark_min_time=2s",
+          "--benchmark_min_warmup_time=0",
+          "--benchmark_out=/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Uniform-t1-original/benchmark.json",
+          "--benchmark_out_format=json"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Uniform-t1-original",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp"
+        }
+      },
+      "benchmark.json": {
+        "context": {
+          "date": "2026-09-23T07:39:01+09:00",
+          "host_name": "cygnus",
+          "executable": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/original",
+          "num_cpus": 96,
+          "mhz_per_cpu": 2503,
+          "cpu_scaling_enabled": false,
+          "caches": [
+            {
+              "type": "Data",
+              "level": 1,
+              "size": 49152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Instruction",
+              "level": 1,
+              "size": 32768,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 2,
+              "size": 2097152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 3,
+              "size": 47185920,
+              "num_sharing": 48
+            }
+          ],
+          "load_avg": [
+            0.162109,
+            1.32666,
+            1.07568
+          ],
+          "library_version": "v1.8.4",
+          "library_build_type": "release",
+          "json_schema_version": 1
+        },
+        "benchmarks": [
+          {
+            "name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=1KB(20% 8B)/real_time/threads:1",
+            "family_index": 0,
+            "per_family_instance_index": 0,
+            "run_name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=1KB(20% 8B)/real_time/threads:1",
+            "run_type": "iteration",
+            "repetitions": 1,
+            "repetition_index": 0,
+            "threads": 1,
+            "iterations": 810507,
+            "real_time": 2859.008205066603,
+            "cpu_time": 2845.213848862503,
+            "time_unit": "ns",
+            "Append_Region_Live": 6.0,
+            "Append_Region_Peak": 6.0,
+            "Checkpoints": 0.0,
+            "CorpusBytes": 8589934080.0,
+            "CorpusKeys": 8259552.0,
+            "Elapsed_Sec": 2.317252083,
+            "Populate_Sec": 7.814699803,
+            "Reorganize_Wait_Duration_us": 0.0,
+            "Reset_Sec": 0.0,
+            "T1_Splits": 0.0,
+            "items_per_second": 349771.64396654966
+          }
+        ]
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8261632,
+        "after_current": 8261632,
+        "body_bytes": 0,
+        "bpf_load_seconds": 0
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-hints-eb9c461cd115.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-hints-eb9c461cd115",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_snapshot_original_resident.py",
+        "case",
+        "--variant",
+        "original",
+        "--scenario",
+        "resident",
+        "--dist",
+        "Uniform",
+        "--threads",
+        "1",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016",
+        "--dest",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Uniform-t1-original"
+      ],
+      "scope-exit.json": {
+        "code": 0,
+        "wall_seconds": 11.678562117740512
+      },
+      "throughput.json": {
+        "variant": "original",
+        "scenario": "resident",
+        "distribution": "Uniform",
+        "threads": 1,
+        "repetition": 1,
+        "ops_per_second": 349771.64396654966
+      }
+    },
+    "r1-resident-Uniform-t1-snapshot": {
+      "benchmark-command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/snapshot",
+          "--benchmark_filter=^Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=.*threads:1$",
+          "--benchmark_min_time=2s",
+          "--benchmark_min_warmup_time=0",
+          "--benchmark_out=/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Uniform-t1-snapshot/benchmark.json",
+          "--benchmark_out_format=json"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Uniform-t1-snapshot",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp",
+          "PAGE_HINT_FD": "5",
+          "PAGE_HINT_PAGES": "1716438"
+        }
+      },
+      "benchmark.json": {
+        "context": {
+          "date": "2026-09-23T07:39:13+09:00",
+          "host_name": "cygnus",
+          "executable": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/snapshot",
+          "num_cpus": 96,
+          "mhz_per_cpu": 2499,
+          "cpu_scaling_enabled": false,
+          "caches": [
+            {
+              "type": "Data",
+              "level": 1,
+              "size": 49152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Instruction",
+              "level": 1,
+              "size": 32768,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 2,
+              "size": 2097152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 3,
+              "size": 47185920,
+              "num_sharing": 48
+            }
+          ],
+          "load_avg": [
+            0.291504,
+            1.31543,
+            1.07471
+          ],
+          "library_version": "v1.8.4",
+          "library_build_type": "release",
+          "json_schema_version": 1
+        },
+        "benchmarks": [
+          {
+            "name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=1KB(20% 8B)/real_time/threads:1",
+            "family_index": 0,
+            "per_family_instance_index": 0,
+            "run_name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=1KB(20% 8B)/real_time/threads:1",
+            "run_type": "iteration",
+            "repetitions": 1,
+            "repetition_index": 0,
+            "threads": 1,
+            "iterations": 804041,
+            "real_time": 2961.4242187516597,
+            "cpu_time": 2947.054515876678,
+            "time_unit": "ns",
+            "Append_Region_Live": 6.0,
+            "Append_Region_Peak": 6.0,
+            "Checkpoints": 0.0,
+            "CorpusBytes": 8589934080.0,
+            "CorpusKeys": 8259552.0,
+            "Elapsed_Sec": 2.381112224,
+            "Populate_Sec": 2.533337377,
+            "Reorganize_Wait_Duration_us": 0.0,
+            "Reset_Sec": 0.0,
+            "T1_Splits": 0.0,
+            "items_per_second": 337675.36365375365
+          }
+        ]
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8237056,
+        "after_current": 8937472,
+        "body_bytes": 643680,
+        "bpf_load_seconds": 0.0027156872674822807
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-hints-7fea18b932f1.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-hints-7fea18b932f1",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_snapshot_original_resident.py",
+        "case",
+        "--variant",
+        "snapshot",
+        "--scenario",
+        "resident",
+        "--dist",
+        "Uniform",
+        "--threads",
+        "1",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016",
+        "--dest",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Uniform-t1-snapshot"
+      ],
+      "scope-exit.json": {
+        "code": 0,
+        "wall_seconds": 6.471974423155189
+      },
+      "snapshot-init.json": {
+        "snapshot_seconds": 0.005045577,
+        "resident_pages": 1716438,
+        "confirmed_pages": 1716438,
+        "mincore_calls": 1677
+      },
+      "throughput.json": {
+        "variant": "snapshot",
+        "scenario": "resident",
+        "distribution": "Uniform",
+        "threads": 1,
+        "repetition": 1,
+        "ops_per_second": 337675.36365375365
+      }
+    },
+    "r1-resident-Uniform-t16-original": {
+      "benchmark-command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/original",
+          "--benchmark_filter=^Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=.*threads:16$",
+          "--benchmark_min_time=2s",
+          "--benchmark_min_warmup_time=0",
+          "--benchmark_out=/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Uniform-t16-original/benchmark.json",
+          "--benchmark_out_format=json"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "16",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Uniform-t16-original",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp"
+        }
+      },
+      "benchmark.json": {
+        "context": {
+          "date": "2026-09-23T07:39:32+09:00",
+          "host_name": "cygnus",
+          "executable": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/original",
+          "num_cpus": 96,
+          "mhz_per_cpu": 1800,
+          "cpu_scaling_enabled": false,
+          "caches": [
+            {
+              "type": "Data",
+              "level": 1,
+              "size": 49152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Instruction",
+              "level": 1,
+              "size": 32768,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 2,
+              "size": 2097152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 3,
+              "size": 47185920,
+              "num_sharing": 48
+            }
+          ],
+          "load_avg": [
+            0.544434,
+            1.31006,
+            1.07861
+          ],
+          "library_version": "v1.8.4",
+          "library_build_type": "release",
+          "json_schema_version": 1
+        },
+        "benchmarks": [
+          {
+            "name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=1KB(20% 8B)/real_time/threads:16",
+            "family_index": 0,
+            "per_family_instance_index": 0,
+            "run_name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=1KB(20% 8B)/real_time/threads:16",
+            "run_type": "iteration",
+            "repetitions": 1,
+            "repetition_index": 0,
+            "threads": 16,
+            "iterations": 15699248,
+            "real_time": 183.58222176570345,
+            "cpu_time": 2933.451989802314,
+            "time_unit": "ns",
+            "Append_Region_Live": 6.0,
+            "Append_Region_Peak": 6.0,
+            "Checkpoints": 0.0,
+            "CorpusBytes": 8589934080.0,
+            "CorpusKeys": 8259552.0,
+            "Elapsed_Sec": 2.9412579991874996,
+            "Populate_Sec": 2.511757336,
+            "Reorganize_Wait_Duration_us": 0.0,
+            "Reset_Sec": 0.0,
+            "T1_Splits": 0.0,
+            "items_per_second": 5447150.548576804
+          }
+        ]
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8241152,
+        "after_current": 8241152,
+        "body_bytes": 0,
+        "bpf_load_seconds": 0
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-hints-f5983700aeaa.scope",
+        "cpu_affinity": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-hints-f5983700aeaa",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_snapshot_original_resident.py",
+        "case",
+        "--variant",
+        "original",
+        "--scenario",
+        "resident",
+        "--dist",
+        "Uniform",
+        "--threads",
+        "16",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016",
+        "--dest",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Uniform-t16-original"
+      ],
+      "scope-exit.json": {
+        "code": 0,
+        "wall_seconds": 6.421765389852226
+      },
+      "throughput.json": {
+        "variant": "original",
+        "scenario": "resident",
+        "distribution": "Uniform",
+        "threads": 16,
+        "repetition": 1,
+        "ops_per_second": 5447150.548576804
+      }
+    },
+    "r1-resident-Uniform-t16-snapshot": {
+      "benchmark-command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/snapshot",
+          "--benchmark_filter=^Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=.*threads:16$",
+          "--benchmark_min_time=2s",
+          "--benchmark_min_warmup_time=0",
+          "--benchmark_out=/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Uniform-t16-snapshot/benchmark.json",
+          "--benchmark_out_format=json"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "16",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Uniform-t16-snapshot",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp",
+          "PAGE_HINT_FD": "5",
+          "PAGE_HINT_PAGES": "1716438"
+        }
+      },
+      "benchmark.json": {
+        "context": {
+          "date": "2026-09-23T07:39:39+09:00",
+          "host_name": "cygnus",
+          "executable": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/snapshot",
+          "num_cpus": 96,
+          "mhz_per_cpu": 1800,
+          "cpu_scaling_enabled": false,
+          "caches": [
+            {
+              "type": "Data",
+              "level": 1,
+              "size": 49152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Instruction",
+              "level": 1,
+              "size": 32768,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 2,
+              "size": 2097152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 3,
+              "size": 47185920,
+              "num_sharing": 48
+            }
+          ],
+          "load_avg": [
+            1.78223,
+            1.5542,
+            1.15918
+          ],
+          "library_version": "v1.8.4",
+          "library_build_type": "release",
+          "json_schema_version": 1
+        },
+        "benchmarks": [
+          {
+            "name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=1KB(20% 8B)/real_time/threads:16",
+            "family_index": 0,
+            "per_family_instance_index": 0,
+            "run_name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=1KB(20% 8B)/real_time/threads:16",
+            "run_type": "iteration",
+            "repetitions": 1,
+            "repetition_index": 0,
+            "threads": 16,
+            "iterations": 15578096,
+            "real_time": 180.6704148109448,
+            "cpu_time": 2888.5509001228397,
+            "time_unit": "ns",
+            "Append_Region_Live": 6.0,
+            "Append_Region_Peak": 6.0,
+            "Checkpoints": 0.0,
+            "CorpusBytes": 8589934080.0,
+            "CorpusKeys": 8259552.0,
+            "Elapsed_Sec": 2.846469482625,
+            "Populate_Sec": 2.530260686,
+            "Reorganize_Wait_Duration_us": 0.0,
+            "Reset_Sec": 0.0,
+            "T1_Splits": 0.0,
+            "items_per_second": 5534940.521647716
+          }
+        ]
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8237056,
+        "after_current": 8941568,
+        "body_bytes": 643680,
+        "bpf_load_seconds": 0.0025975247845053673
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-hints-7367c51fabeb.scope",
+        "cpu_affinity": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-hints-7367c51fabeb",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_snapshot_original_resident.py",
+        "case",
+        "--variant",
+        "snapshot",
+        "--scenario",
+        "resident",
+        "--dist",
+        "Uniform",
+        "--threads",
+        "16",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016",
+        "--dest",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Uniform-t16-snapshot"
+      ],
+      "scope-exit.json": {
+        "code": 0,
+        "wall_seconds": 6.5221514673903584
+      },
+      "snapshot-init.json": {
+        "snapshot_seconds": 0.00499773,
+        "resident_pages": 1716438,
+        "confirmed_pages": 1716438,
+        "mincore_calls": 1677
+      },
+      "throughput.json": {
+        "variant": "snapshot",
+        "scenario": "resident",
+        "distribution": "Uniform",
+        "threads": 16,
+        "repetition": 1,
+        "ops_per_second": 5534940.521647716
+      }
+    },
+    "r1-resident-Zipf-t1-original": {
+      "benchmark-command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/original",
+          "--benchmark_filter=^Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=.*threads:1$",
+          "--benchmark_min_time=2s",
+          "--benchmark_min_warmup_time=0",
+          "--benchmark_out=/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Zipf-t1-original/benchmark.json",
+          "--benchmark_out_format=json"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Zipf-t1-original",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp"
+        }
+      },
+      "benchmark.json": {
+        "context": {
+          "date": "2026-09-23T07:39:58+09:00",
+          "host_name": "cygnus",
+          "executable": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/original",
+          "num_cpus": 96,
+          "mhz_per_cpu": 2466,
+          "cpu_scaling_enabled": false,
+          "caches": [
+            {
+              "type": "Data",
+              "level": 1,
+              "size": 49152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Instruction",
+              "level": 1,
+              "size": 32768,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 2,
+              "size": 2097152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 3,
+              "size": 47185920,
+              "num_sharing": 48
+            }
+          ],
+          "load_avg": [
+            3.94678,
+            2.02881,
+            1.32227
+          ],
+          "library_version": "v1.8.4",
+          "library_build_type": "release",
+          "json_schema_version": 1
+        },
+        "benchmarks": [
+          {
+            "name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=1KB(20% 8B)/real_time/threads:1",
+            "family_index": 0,
+            "per_family_instance_index": 0,
+            "run_name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=1KB(20% 8B)/real_time/threads:1",
+            "run_type": "iteration",
+            "repetitions": 1,
+            "repetition_index": 0,
+            "threads": 1,
+            "iterations": 1035030,
+            "real_time": 2345.943979896426,
+            "cpu_time": 2334.996911200642,
+            "time_unit": "ns",
+            "Append_Region_Live": 6.0,
+            "Append_Region_Peak": 6.0,
+            "Checkpoints": 0.0,
+            "CorpusBytes": 8589934080.0,
+            "CorpusKeys": 8259552.0,
+            "Elapsed_Sec": 2.428127869,
+            "Populate_Sec": 2.571926296,
+            "Reorganize_Wait_Duration_us": 0.0,
+            "Reset_Sec": 0.0,
+            "T1_Splits": 0.0,
+            "items_per_second": 426267.63834494905
+          }
+        ]
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8228864,
+        "after_current": 8228864,
+        "body_bytes": 0,
+        "bpf_load_seconds": 0
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-hints-aa93b8292fdb.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-hints-aa93b8292fdb",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_snapshot_original_resident.py",
+        "case",
+        "--variant",
+        "original",
+        "--scenario",
+        "resident",
+        "--dist",
+        "Zipf",
+        "--threads",
+        "1",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016",
+        "--dest",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Zipf-t1-original"
+      ],
+      "scope-exit.json": {
+        "code": 0,
+        "wall_seconds": 6.42164702154696
+      },
+      "throughput.json": {
+        "variant": "original",
+        "scenario": "resident",
+        "distribution": "Zipf",
+        "threads": 1,
+        "repetition": 1,
+        "ops_per_second": 426267.63834494905
+      }
+    },
+    "r1-resident-Zipf-t1-snapshot": {
+      "benchmark-command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/snapshot",
+          "--benchmark_filter=^Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=.*threads:1$",
+          "--benchmark_min_time=2s",
+          "--benchmark_min_warmup_time=0",
+          "--benchmark_out=/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Zipf-t1-snapshot/benchmark.json",
+          "--benchmark_out_format=json"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Zipf-t1-snapshot",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp",
+          "PAGE_HINT_FD": "5",
+          "PAGE_HINT_PAGES": "1716438"
+        }
+      },
+      "benchmark.json": {
+        "context": {
+          "date": "2026-09-23T07:40:05+09:00",
+          "host_name": "cygnus",
+          "executable": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/snapshot",
+          "num_cpus": 96,
+          "mhz_per_cpu": 2497,
+          "cpu_scaling_enabled": false,
+          "caches": [
+            {
+              "type": "Data",
+              "level": 1,
+              "size": 49152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Instruction",
+              "level": 1,
+              "size": 32768,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 2,
+              "size": 2097152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 3,
+              "size": 47185920,
+              "num_sharing": 48
+            }
+          ],
+          "load_avg": [
+            3.71045,
+            2.01172,
+            1.32031
+          ],
+          "library_version": "v1.8.4",
+          "library_build_type": "release",
+          "json_schema_version": 1
+        },
+        "benchmarks": [
+          {
+            "name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=1KB(20% 8B)/real_time/threads:1",
+            "family_index": 0,
+            "per_family_instance_index": 0,
+            "run_name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=1KB(20% 8B)/real_time/threads:1",
+            "run_type": "iteration",
+            "repetitions": 1,
+            "repetition_index": 0,
+            "threads": 1,
+            "iterations": 1026703,
+            "real_time": 2357.419379044477,
+            "cpu_time": 2346.7335003404096,
+            "time_unit": "ns",
+            "Append_Region_Live": 6.0,
+            "Append_Region_Peak": 6.0,
+            "Checkpoints": 0.0,
+            "CorpusBytes": 8589934080.0,
+            "CorpusKeys": 8259552.0,
+            "Elapsed_Sec": 2.420374096,
+            "Populate_Sec": 2.544336262,
+            "Reorganize_Wait_Duration_us": 0.0,
+            "Reset_Sec": 0.0,
+            "T1_Splits": 0.0,
+            "items_per_second": 424192.6612164043
+          }
+        ]
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8253440,
+        "after_current": 8957952,
+        "body_bytes": 643680,
+        "bpf_load_seconds": 0.002396663650870323
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-hints-4c300c8d269f.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-hints-4c300c8d269f",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_snapshot_original_resident.py",
+        "case",
+        "--variant",
+        "snapshot",
+        "--scenario",
+        "resident",
+        "--dist",
+        "Zipf",
+        "--threads",
+        "1",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016",
+        "--dest",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Zipf-t1-snapshot"
+      ],
+      "scope-exit.json": {
+        "code": 0,
+        "wall_seconds": 6.471673938445747
+      },
+      "snapshot-init.json": {
+        "snapshot_seconds": 0.005200651,
+        "resident_pages": 1716438,
+        "confirmed_pages": 1716438,
+        "mincore_calls": 1677
+      },
+      "throughput.json": {
+        "variant": "snapshot",
+        "scenario": "resident",
+        "distribution": "Zipf",
+        "threads": 1,
+        "repetition": 1,
+        "ops_per_second": 424192.6612164043
+      }
+    },
+    "r1-resident-Zipf-t16-original": {
+      "benchmark-command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/original",
+          "--benchmark_filter=^Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=.*threads:16$",
+          "--benchmark_min_time=2s",
+          "--benchmark_min_warmup_time=0",
+          "--benchmark_out=/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Zipf-t16-original/benchmark.json",
+          "--benchmark_out_format=json"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "16",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Zipf-t16-original",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp"
+        }
+      },
+      "benchmark.json": {
+        "context": {
+          "date": "2026-09-23T07:40:24+09:00",
+          "host_name": "cygnus",
+          "executable": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/original",
+          "num_cpus": 96,
+          "mhz_per_cpu": 1800,
+          "cpu_scaling_enabled": false,
+          "caches": [
+            {
+              "type": "Data",
+              "level": 1,
+              "size": 49152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Instruction",
+              "level": 1,
+              "size": 32768,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 2,
+              "size": 2097152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 3,
+              "size": 47185920,
+              "num_sharing": 48
+            }
+          ],
+          "load_avg": [
+            3.10645,
+            1.97998,
+            1.32422
+          ],
+          "library_version": "v1.8.4",
+          "library_build_type": "release",
+          "json_schema_version": 1
+        },
+        "benchmarks": [
+          {
+            "name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=1KB(20% 8B)/real_time/threads:16",
+            "family_index": 0,
+            "per_family_instance_index": 0,
+            "run_name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=1KB(20% 8B)/real_time/threads:16",
+            "run_type": "iteration",
+            "repetitions": 1,
+            "repetition_index": 0,
+            "threads": 16,
+            "iterations": 20260688,
+            "real_time": 138.85269813033827,
+            "cpu_time": 2213.5366836012677,
+            "time_unit": "ns",
+            "Append_Region_Live": 6.0,
+            "Append_Region_Peak": 6.0,
+            "Checkpoints": 0.0,
+            "CorpusBytes": 8589934080.0,
+            "CorpusKeys": 8259552.0,
+            "Elapsed_Sec": 2.8651639172499994,
+            "Populate_Sec": 2.533615124,
+            "Reorganize_Wait_Duration_us": 0.0,
+            "Reset_Sec": 0.0,
+            "T1_Splits": 0.0,
+            "items_per_second": 7201876.617920091
+          }
+        ]
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8249344,
+        "after_current": 8249344,
+        "body_bytes": 0,
+        "bpf_load_seconds": 0
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-hints-085b13cc0bec.scope",
+        "cpu_affinity": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-hints-085b13cc0bec",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_snapshot_original_resident.py",
+        "case",
+        "--variant",
+        "original",
+        "--scenario",
+        "resident",
+        "--dist",
+        "Zipf",
+        "--threads",
+        "16",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016",
+        "--dest",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Zipf-t16-original"
+      ],
+      "scope-exit.json": {
+        "code": 0,
+        "wall_seconds": 6.421788799576461
+      },
+      "throughput.json": {
+        "variant": "original",
+        "scenario": "resident",
+        "distribution": "Zipf",
+        "threads": 16,
+        "repetition": 1,
+        "ops_per_second": 7201876.617920091
+      }
+    },
+    "r1-resident-Zipf-t16-snapshot": {
+      "benchmark-command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/snapshot",
+          "--benchmark_filter=^Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=.*threads:16$",
+          "--benchmark_min_time=2s",
+          "--benchmark_min_warmup_time=0",
+          "--benchmark_out=/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Zipf-t16-snapshot/benchmark.json",
+          "--benchmark_out_format=json"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "16",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Zipf-t16-snapshot",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp",
+          "PAGE_HINT_FD": "5",
+          "PAGE_HINT_PAGES": "1716438"
+        }
+      },
+      "benchmark.json": {
+        "context": {
+          "date": "2026-09-23T07:40:31+09:00",
+          "host_name": "cygnus",
+          "executable": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/snapshot",
+          "num_cpus": 96,
+          "mhz_per_cpu": 1800,
+          "cpu_scaling_enabled": false,
+          "caches": [
+            {
+              "type": "Data",
+              "level": 1,
+              "size": 49152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Instruction",
+              "level": 1,
+              "size": 32768,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 2,
+              "size": 2097152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 3,
+              "size": 47185920,
+              "num_sharing": 48
+            }
+          ],
+          "load_avg": [
+            2.78223,
+            1.94727,
+            1.32031
+          ],
+          "library_version": "v1.8.4",
+          "library_build_type": "release",
+          "json_schema_version": 1
+        },
+        "benchmarks": [
+          {
+            "name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=1KB(20% 8B)/real_time/threads:16",
+            "family_index": 0,
+            "per_family_instance_index": 0,
+            "run_name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=1KB(20% 8B)/real_time/threads:16",
+            "run_type": "iteration",
+            "repetitions": 1,
+            "repetition_index": 0,
+            "threads": 16,
+            "iterations": 19718464,
+            "real_time": 139.60296913985508,
+            "cpu_time": 2230.114250734743,
+            "time_unit": "ns",
+            "Append_Region_Live": 6.0,
+            "Append_Region_Peak": 6.0,
+            "Checkpoints": 0.0,
+            "CorpusBytes": 8589934080.0,
+            "CorpusKeys": 8259552.0,
+            "Elapsed_Sec": 2.798101189,
+            "Populate_Sec": 2.537338815,
+            "Reorganize_Wait_Duration_us": 0.0,
+            "Reset_Sec": 0.0,
+            "T1_Splits": 0.0,
+            "items_per_second": 7163171.429385532
+          }
+        ]
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8245248,
+        "after_current": 8945664,
+        "body_bytes": 643680,
+        "bpf_load_seconds": 0.0023992732167243958
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-hints-caf61edaf1eb.scope",
+        "cpu_affinity": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-hints-caf61edaf1eb",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_snapshot_original_resident.py",
+        "case",
+        "--variant",
+        "snapshot",
+        "--scenario",
+        "resident",
+        "--dist",
+        "Zipf",
+        "--threads",
+        "16",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016",
+        "--dest",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r1-resident-Zipf-t16-snapshot"
+      ],
+      "scope-exit.json": {
+        "code": 0,
+        "wall_seconds": 6.52192460373044
+      },
+      "snapshot-init.json": {
+        "snapshot_seconds": 0.005101767,
+        "resident_pages": 1716438,
+        "confirmed_pages": 1716438,
+        "mincore_calls": 1677
+      },
+      "throughput.json": {
+        "variant": "snapshot",
+        "scenario": "resident",
+        "distribution": "Zipf",
+        "threads": 16,
+        "repetition": 1,
+        "ops_per_second": 7163171.429385532
+      }
+    },
+    "r2-resident-Uniform-t1-original": {
+      "benchmark-command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/original",
+          "--benchmark_filter=^Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=.*threads:1$",
+          "--benchmark_min_time=2s",
+          "--benchmark_min_warmup_time=0",
+          "--benchmark_out=/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Uniform-t1-original/benchmark.json",
+          "--benchmark_out_format=json"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Uniform-t1-original",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp"
+        }
+      },
+      "benchmark.json": {
+        "context": {
+          "date": "2026-09-23T07:39:26+09:00",
+          "host_name": "cygnus",
+          "executable": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/original",
+          "num_cpus": 96,
+          "mhz_per_cpu": 2499,
+          "cpu_scaling_enabled": false,
+          "caches": [
+            {
+              "type": "Data",
+              "level": 1,
+              "size": 49152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Instruction",
+              "level": 1,
+              "size": 32768,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 2,
+              "size": 2097152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 3,
+              "size": 47185920,
+              "num_sharing": 48
+            }
+          ],
+          "load_avg": [
+            0.504395,
+            1.31543,
+            1.0791
+          ],
+          "library_version": "v1.8.4",
+          "library_build_type": "release",
+          "json_schema_version": 1
+        },
+        "benchmarks": [
+          {
+            "name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=1KB(20% 8B)/real_time/threads:1",
+            "family_index": 0,
+            "per_family_instance_index": 0,
+            "run_name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=1KB(20% 8B)/real_time/threads:1",
+            "run_type": "iteration",
+            "repetitions": 1,
+            "repetition_index": 0,
+            "threads": 1,
+            "iterations": 794650,
+            "real_time": 2964.583694286031,
+            "cpu_time": 2950.050174290568,
+            "time_unit": "ns",
+            "Append_Region_Live": 6.0,
+            "Append_Region_Peak": 6.0,
+            "Checkpoints": 0.0,
+            "CorpusBytes": 8589934080.0,
+            "CorpusKeys": 8259552.0,
+            "Elapsed_Sec": 2.355812661,
+            "Populate_Sec": 2.543258112,
+            "Reorganize_Wait_Duration_us": 0.0,
+            "Reset_Sec": 0.0,
+            "T1_Splits": 0.0,
+            "items_per_second": 337315.4894993892
+          }
+        ]
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8237056,
+        "after_current": 8237056,
+        "body_bytes": 0,
+        "bpf_load_seconds": 0
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-hints-3ca38540cccb.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-hints-3ca38540cccb",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_snapshot_original_resident.py",
+        "case",
+        "--variant",
+        "original",
+        "--scenario",
+        "resident",
+        "--dist",
+        "Uniform",
+        "--threads",
+        "1",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016",
+        "--dest",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Uniform-t1-original"
+      ],
+      "scope-exit.json": {
+        "code": 0,
+        "wall_seconds": 6.421986599452794
+      },
+      "throughput.json": {
+        "variant": "original",
+        "scenario": "resident",
+        "distribution": "Uniform",
+        "threads": 1,
+        "repetition": 2,
+        "ops_per_second": 337315.4894993892
+      }
+    },
+    "r2-resident-Uniform-t1-snapshot": {
+      "benchmark-command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/snapshot",
+          "--benchmark_filter=^Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=.*threads:1$",
+          "--benchmark_min_time=2s",
+          "--benchmark_min_warmup_time=0",
+          "--benchmark_out=/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Uniform-t1-snapshot/benchmark.json",
+          "--benchmark_out_format=json"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Uniform-t1-snapshot",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp",
+          "PAGE_HINT_FD": "5",
+          "PAGE_HINT_PAGES": "1716438"
+        }
+      },
+      "benchmark.json": {
+        "context": {
+          "date": "2026-09-23T07:39:20+09:00",
+          "host_name": "cygnus",
+          "executable": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/snapshot",
+          "num_cpus": 96,
+          "mhz_per_cpu": 2550,
+          "cpu_scaling_enabled": false,
+          "caches": [
+            {
+              "type": "Data",
+              "level": 1,
+              "size": 49152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Instruction",
+              "level": 1,
+              "size": 32768,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 2,
+              "size": 2097152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 3,
+              "size": 47185920,
+              "num_sharing": 48
+            }
+          ],
+          "load_avg": [
+            0.508789,
+            1.34375,
+            1.08545
+          ],
+          "library_version": "v1.8.4",
+          "library_build_type": "release",
+          "json_schema_version": 1
+        },
+        "benchmarks": [
+          {
+            "name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=1KB(20% 8B)/real_time/threads:1",
+            "family_index": 0,
+            "per_family_instance_index": 0,
+            "run_name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=1KB(20% 8B)/real_time/threads:1",
+            "run_type": "iteration",
+            "repetitions": 1,
+            "repetition_index": 0,
+            "threads": 1,
+            "iterations": 805667,
+            "real_time": 2966.0305725949734,
+            "cpu_time": 2951.6881254910527,
+            "time_unit": "ns",
+            "Append_Region_Live": 6.0,
+            "Append_Region_Peak": 6.0,
+            "Checkpoints": 0.0,
+            "CorpusBytes": 8589934080.0,
+            "CorpusKeys": 8259552.0,
+            "Elapsed_Sec": 2.389638303,
+            "Populate_Sec": 2.540478441,
+            "Reorganize_Wait_Duration_us": 0.0,
+            "Reset_Sec": 0.0,
+            "T1_Splits": 0.0,
+            "items_per_second": 337150.9414770132
+          }
+        ]
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8237056,
+        "after_current": 8941568,
+        "body_bytes": 643680,
+        "bpf_load_seconds": 0.001954103820025921
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-hints-4425e3246646.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-hints-4425e3246646",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_snapshot_original_resident.py",
+        "case",
+        "--variant",
+        "snapshot",
+        "--scenario",
+        "resident",
+        "--dist",
+        "Uniform",
+        "--threads",
+        "1",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016",
+        "--dest",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Uniform-t1-snapshot"
+      ],
+      "scope-exit.json": {
+        "code": 0,
+        "wall_seconds": 6.4717897567898035
+      },
+      "snapshot-init.json": {
+        "snapshot_seconds": 0.006867179,
+        "resident_pages": 1716438,
+        "confirmed_pages": 1716438,
+        "mincore_calls": 1677
+      },
+      "throughput.json": {
+        "variant": "snapshot",
+        "scenario": "resident",
+        "distribution": "Uniform",
+        "threads": 1,
+        "repetition": 2,
+        "ops_per_second": 337150.9414770132
+      }
+    },
+    "r2-resident-Uniform-t16-original": {
+      "benchmark-command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/original",
+          "--benchmark_filter=^Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=.*threads:16$",
+          "--benchmark_min_time=2s",
+          "--benchmark_min_warmup_time=0",
+          "--benchmark_out=/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Uniform-t16-original/benchmark.json",
+          "--benchmark_out_format=json"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "16",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Uniform-t16-original",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp"
+        }
+      },
+      "benchmark.json": {
+        "context": {
+          "date": "2026-09-23T07:39:52+09:00",
+          "host_name": "cygnus",
+          "executable": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/original",
+          "num_cpus": 96,
+          "mhz_per_cpu": 1800,
+          "cpu_scaling_enabled": false,
+          "caches": [
+            {
+              "type": "Data",
+              "level": 1,
+              "size": 49152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Instruction",
+              "level": 1,
+              "size": 32768,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 2,
+              "size": 2097152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 3,
+              "size": 47185920,
+              "num_sharing": 48
+            }
+          ],
+          "load_avg": [
+            2.81006,
+            1.77588,
+            1.2373
+          ],
+          "library_version": "v1.8.4",
+          "library_build_type": "release",
+          "json_schema_version": 1
+        },
+        "benchmarks": [
+          {
+            "name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=1KB(20% 8B)/real_time/threads:16",
+            "family_index": 0,
+            "per_family_instance_index": 0,
+            "run_name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=1KB(20% 8B)/real_time/threads:16",
+            "run_type": "iteration",
+            "repetitions": 1,
+            "repetition_index": 0,
+            "threads": 16,
+            "iterations": 15409408,
+            "real_time": 183.5935546238326,
+            "cpu_time": 2933.8880722088734,
+            "time_unit": "ns",
+            "Append_Region_Live": 6.0,
+            "Append_Region_Peak": 6.0,
+            "Checkpoints": 0.0,
+            "CorpusBytes": 8589934080.0,
+            "CorpusKeys": 8259552.0,
+            "Elapsed_Sec": 2.8861932890624997,
+            "Populate_Sec": 2.518038036,
+            "Reorganize_Wait_Duration_us": 0.0,
+            "Reset_Sec": 0.0,
+            "T1_Splits": 0.0,
+            "items_per_second": 5446814.307010472
+          }
+        ]
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8253440,
+        "after_current": 8253440,
+        "body_bytes": 0,
+        "bpf_load_seconds": 0
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-hints-48a85959cebb.scope",
+        "cpu_affinity": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-hints-48a85959cebb",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_snapshot_original_resident.py",
+        "case",
+        "--variant",
+        "original",
+        "--scenario",
+        "resident",
+        "--dist",
+        "Uniform",
+        "--threads",
+        "16",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016",
+        "--dest",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Uniform-t16-original"
+      ],
+      "scope-exit.json": {
+        "code": 0,
+        "wall_seconds": 6.421712161973119
+      },
+      "throughput.json": {
+        "variant": "original",
+        "scenario": "resident",
+        "distribution": "Uniform",
+        "threads": 16,
+        "repetition": 2,
+        "ops_per_second": 5446814.307010472
+      }
+    },
+    "r2-resident-Uniform-t16-snapshot": {
+      "benchmark-command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/snapshot",
+          "--benchmark_filter=^Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=.*threads:16$",
+          "--benchmark_min_time=2s",
+          "--benchmark_min_warmup_time=0",
+          "--benchmark_out=/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Uniform-t16-snapshot/benchmark.json",
+          "--benchmark_out_format=json"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "16",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Uniform-t16-snapshot",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp",
+          "PAGE_HINT_FD": "5",
+          "PAGE_HINT_PAGES": "1716438"
+        }
+      },
+      "benchmark.json": {
+        "context": {
+          "date": "2026-09-23T07:39:45+09:00",
+          "host_name": "cygnus",
+          "executable": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/snapshot",
+          "num_cpus": 96,
+          "mhz_per_cpu": 1800,
+          "cpu_scaling_enabled": false,
+          "caches": [
+            {
+              "type": "Data",
+              "level": 1,
+              "size": 49152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Instruction",
+              "level": 1,
+              "size": 32768,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 2,
+              "size": 2097152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 3,
+              "size": 47185920,
+              "num_sharing": 48
+            }
+          ],
+          "load_avg": [
+            1.66162,
+            1.53564,
+            1.15723
+          ],
+          "library_version": "v1.8.4",
+          "library_build_type": "release",
+          "json_schema_version": 1
+        },
+        "benchmarks": [
+          {
+            "name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=1KB(20% 8B)/real_time/threads:16",
+            "family_index": 0,
+            "per_family_instance_index": 0,
+            "run_name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Uniform/Value=1KB(20% 8B)/real_time/threads:16",
+            "run_type": "iteration",
+            "repetitions": 1,
+            "repetition_index": 0,
+            "threads": 16,
+            "iterations": 15574320,
+            "real_time": 180.78832085995398,
+            "cpu_time": 2890.381874007983,
+            "time_unit": "ns",
+            "Append_Region_Live": 6.0,
+            "Append_Region_Peak": 6.0,
+            "Checkpoints": 0.0,
+            "CorpusBytes": 8589934080.0,
+            "CorpusKeys": 8259552.0,
+            "Elapsed_Sec": 2.8546590775625,
+            "Populate_Sec": 2.519068877,
+            "Reorganize_Wait_Duration_us": 0.0,
+            "Reset_Sec": 0.0,
+            "T1_Splits": 0.0,
+            "items_per_second": 5531330.75877529
+          }
+        ]
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8237056,
+        "after_current": 8933376,
+        "body_bytes": 643680,
+        "bpf_load_seconds": 0.0022021420300006866
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-hints-0719088320a3.scope",
+        "cpu_affinity": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-hints-0719088320a3",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_snapshot_original_resident.py",
+        "case",
+        "--variant",
+        "snapshot",
+        "--scenario",
+        "resident",
+        "--dist",
+        "Uniform",
+        "--threads",
+        "16",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016",
+        "--dest",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Uniform-t16-snapshot"
+      ],
+      "scope-exit.json": {
+        "code": 0,
+        "wall_seconds": 6.522048536688089
+      },
+      "snapshot-init.json": {
+        "snapshot_seconds": 0.004962838,
+        "resident_pages": 1716438,
+        "confirmed_pages": 1716438,
+        "mincore_calls": 1677
+      },
+      "throughput.json": {
+        "variant": "snapshot",
+        "scenario": "resident",
+        "distribution": "Uniform",
+        "threads": 16,
+        "repetition": 2,
+        "ops_per_second": 5531330.75877529
+      }
+    },
+    "r2-resident-Zipf-t1-original": {
+      "benchmark-command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/original",
+          "--benchmark_filter=^Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=.*threads:1$",
+          "--benchmark_min_time=2s",
+          "--benchmark_min_warmup_time=0",
+          "--benchmark_out=/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Zipf-t1-original/benchmark.json",
+          "--benchmark_out_format=json"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Zipf-t1-original",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp"
+        }
+      },
+      "benchmark.json": {
+        "context": {
+          "date": "2026-09-23T07:40:18+09:00",
+          "host_name": "cygnus",
+          "executable": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/original",
+          "num_cpus": 96,
+          "mhz_per_cpu": 2482,
+          "cpu_scaling_enabled": false,
+          "caches": [
+            {
+              "type": "Data",
+              "level": 1,
+              "size": 49152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Instruction",
+              "level": 1,
+              "size": 32768,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 2,
+              "size": 2097152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 3,
+              "size": 47185920,
+              "num_sharing": 48
+            }
+          ],
+          "load_avg": [
+            3.11621,
+            1.9624,
+            1.31494
+          ],
+          "library_version": "v1.8.4",
+          "library_build_type": "release",
+          "json_schema_version": 1
+        },
+        "benchmarks": [
+          {
+            "name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=1KB(20% 8B)/real_time/threads:1",
+            "family_index": 0,
+            "per_family_instance_index": 0,
+            "run_name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=1KB(20% 8B)/real_time/threads:1",
+            "run_type": "iteration",
+            "repetitions": 1,
+            "repetition_index": 0,
+            "threads": 1,
+            "iterations": 1026629,
+            "real_time": 2361.4269042048772,
+            "cpu_time": 2350.400808860845,
+            "time_unit": "ns",
+            "Append_Region_Live": 6.0,
+            "Append_Region_Peak": 6.0,
+            "Checkpoints": 0.0,
+            "CorpusBytes": 8589934080.0,
+            "CorpusKeys": 8259552.0,
+            "Elapsed_Sec": 2.4243142,
+            "Populate_Sec": 2.537018163,
+            "Reorganize_Wait_Duration_us": 0.0,
+            "Reset_Sec": 0.0,
+            "T1_Splits": 0.0,
+            "items_per_second": 423472.77327083424
+          }
+        ]
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8232960,
+        "after_current": 8232960,
+        "body_bytes": 0,
+        "bpf_load_seconds": 0
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-hints-11bad99e0dd9.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-hints-11bad99e0dd9",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_snapshot_original_resident.py",
+        "case",
+        "--variant",
+        "original",
+        "--scenario",
+        "resident",
+        "--dist",
+        "Zipf",
+        "--threads",
+        "1",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016",
+        "--dest",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Zipf-t1-original"
+      ],
+      "scope-exit.json": {
+        "code": 0,
+        "wall_seconds": 6.4218714740127325
+      },
+      "throughput.json": {
+        "variant": "original",
+        "scenario": "resident",
+        "distribution": "Zipf",
+        "threads": 1,
+        "repetition": 2,
+        "ops_per_second": 423472.77327083424
+      }
+    },
+    "r2-resident-Zipf-t1-snapshot": {
+      "benchmark-command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/snapshot",
+          "--benchmark_filter=^Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=.*threads:1$",
+          "--benchmark_min_time=2s",
+          "--benchmark_min_warmup_time=0",
+          "--benchmark_out=/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Zipf-t1-snapshot/benchmark.json",
+          "--benchmark_out_format=json"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "1",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Zipf-t1-snapshot",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp",
+          "PAGE_HINT_FD": "5",
+          "PAGE_HINT_PAGES": "1716438"
+        }
+      },
+      "benchmark.json": {
+        "context": {
+          "date": "2026-09-23T07:40:11+09:00",
+          "host_name": "cygnus",
+          "executable": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/snapshot",
+          "num_cpus": 96,
+          "mhz_per_cpu": 2502,
+          "cpu_scaling_enabled": false,
+          "caches": [
+            {
+              "type": "Data",
+              "level": 1,
+              "size": 49152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Instruction",
+              "level": 1,
+              "size": 32768,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 2,
+              "size": 2097152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 3,
+              "size": 47185920,
+              "num_sharing": 48
+            }
+          ],
+          "load_avg": [
+            3.21338,
+            1.96143,
+            1.31104
+          ],
+          "library_version": "v1.8.4",
+          "library_build_type": "release",
+          "json_schema_version": 1
+        },
+        "benchmarks": [
+          {
+            "name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=1KB(20% 8B)/real_time/threads:1",
+            "family_index": 0,
+            "per_family_instance_index": 0,
+            "run_name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=1KB(20% 8B)/real_time/threads:1",
+            "run_type": "iteration",
+            "repetitions": 1,
+            "repetition_index": 0,
+            "threads": 1,
+            "iterations": 1038328,
+            "real_time": 2382.324953209534,
+            "cpu_time": 2371.2515794623664,
+            "time_unit": "ns",
+            "Append_Region_Live": 6.0,
+            "Append_Region_Peak": 6.0,
+            "Checkpoints": 0.0,
+            "CorpusBytes": 8589934080.0,
+            "CorpusKeys": 8259552.0,
+            "Elapsed_Sec": 2.473640229,
+            "Populate_Sec": 2.536986864,
+            "Reorganize_Wait_Duration_us": 0.0,
+            "Reset_Sec": 0.0,
+            "T1_Splits": 0.0,
+            "items_per_second": 419758.01775184885
+          }
+        ]
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8232960,
+        "after_current": 8937472,
+        "body_bytes": 643680,
+        "bpf_load_seconds": 0.001941039226949215
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-hints-b57e699a75b3.scope",
+        "cpu_affinity": [
+          0
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-hints-b57e699a75b3",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_snapshot_original_resident.py",
+        "case",
+        "--variant",
+        "snapshot",
+        "--scenario",
+        "resident",
+        "--dist",
+        "Zipf",
+        "--threads",
+        "1",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016",
+        "--dest",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Zipf-t1-snapshot"
+      ],
+      "scope-exit.json": {
+        "code": 0,
+        "wall_seconds": 6.47188067343086
+      },
+      "snapshot-init.json": {
+        "snapshot_seconds": 0.005221243,
+        "resident_pages": 1716438,
+        "confirmed_pages": 1716438,
+        "mincore_calls": 1677
+      },
+      "throughput.json": {
+        "variant": "snapshot",
+        "scenario": "resident",
+        "distribution": "Zipf",
+        "threads": 1,
+        "repetition": 2,
+        "ops_per_second": 419758.01775184885
+      }
+    },
+    "r2-resident-Zipf-t16-original": {
+      "benchmark-command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/original",
+          "--benchmark_filter=^Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=.*threads:16$",
+          "--benchmark_min_time=2s",
+          "--benchmark_min_warmup_time=0",
+          "--benchmark_out=/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Zipf-t16-original/benchmark.json",
+          "--benchmark_out_format=json"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "16",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Zipf-t16-original",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp"
+        }
+      },
+      "benchmark.json": {
+        "context": {
+          "date": "2026-09-23T07:40:44+09:00",
+          "host_name": "cygnus",
+          "executable": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/original",
+          "num_cpus": 96,
+          "mhz_per_cpu": 1800,
+          "cpu_scaling_enabled": false,
+          "caches": [
+            {
+              "type": "Data",
+              "level": 1,
+              "size": 49152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Instruction",
+              "level": 1,
+              "size": 32768,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 2,
+              "size": 2097152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 3,
+              "size": 47185920,
+              "num_sharing": 48
+            }
+          ],
+          "load_avg": [
+            4.81494,
+            2.41016,
+            1.47803
+          ],
+          "library_version": "v1.8.4",
+          "library_build_type": "release",
+          "json_schema_version": 1
+        },
+        "benchmarks": [
+          {
+            "name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=1KB(20% 8B)/real_time/threads:16",
+            "family_index": 0,
+            "per_family_instance_index": 0,
+            "run_name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=1KB(20% 8B)/real_time/threads:16",
+            "run_type": "iteration",
+            "repetitions": 1,
+            "repetition_index": 0,
+            "threads": 16,
+            "iterations": 19764640,
+            "real_time": 138.8478066296536,
+            "cpu_time": 2219.992512031588,
+            "time_unit": "ns",
+            "Append_Region_Live": 6.0,
+            "Append_Region_Peak": 6.0,
+            "Checkpoints": 0.0,
+            "CorpusBytes": 8589934080.0,
+            "CorpusKeys": 8259552.0,
+            "Elapsed_Sec": 2.7958033579375003,
+            "Populate_Sec": 2.509275494,
+            "Reorganize_Wait_Duration_us": 0.0,
+            "Reset_Sec": 0.0,
+            "T1_Splits": 0.0,
+            "items_per_second": 7202130.334455215
+          }
+        ]
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8237056,
+        "after_current": 8237056,
+        "body_bytes": 0,
+        "bpf_load_seconds": 0
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-hints-742fb20caf95.scope",
+        "cpu_affinity": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-hints-742fb20caf95",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_snapshot_original_resident.py",
+        "case",
+        "--variant",
+        "original",
+        "--scenario",
+        "resident",
+        "--dist",
+        "Zipf",
+        "--threads",
+        "16",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016",
+        "--dest",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Zipf-t16-original"
+      ],
+      "scope-exit.json": {
+        "code": 0,
+        "wall_seconds": 6.421922644600272
+      },
+      "throughput.json": {
+        "variant": "original",
+        "scenario": "resident",
+        "distribution": "Zipf",
+        "threads": 16,
+        "repetition": 2,
+        "ops_per_second": 7202130.334455215
+      }
+    },
+    "r2-resident-Zipf-t16-snapshot": {
+      "benchmark-command.json": {
+        "command": [
+          "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/snapshot",
+          "--benchmark_filter=^Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=.*threads:16$",
+          "--benchmark_min_time=2s",
+          "--benchmark_min_warmup_time=0",
+          "--benchmark_out=/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Zipf-t16-snapshot/benchmark.json",
+          "--benchmark_out_format=json"
+        ],
+        "uid": 1016,
+        "gid": 1016,
+        "environment": {
+          "REGRESSION_DB": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/get-hit-prototypes-20260922/dense",
+          "REGRESSION_VALUE": "1024",
+          "REGRESSION_COUNT": "8259552",
+          "REGRESSION_SCENARIO": "resident",
+          "REGRESSION_THREADS": "16",
+          "VMEMKV_DB_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/data/throughput-regression-20260922",
+          "VMEMKV_BENCH_RESULTS_DIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Zipf-t16-snapshot",
+          "VMEMKV_BENCH_SKIP_CLEANUP": "1",
+          "VMEMKV_BENCH_LTM": "0",
+          "VMEMKV_CONTEXT_memory_budget_bytes": "1073741824",
+          "VMEMKV_BENCH_INSERT_TIME_BUDGET_SECONDS": "3",
+          "VMEMKV_BENCH_DELETE_TIME_BUDGET_SECONDS": "3",
+          "TMPDIR": "/home/wasanemon/project/VMemKV-1K/build/ltm/tmp",
+          "PAGE_HINT_FD": "5",
+          "PAGE_HINT_PAGES": "1716438"
+        }
+      },
+      "benchmark.json": {
+        "context": {
+          "date": "2026-09-23T07:40:37+09:00",
+          "host_name": "cygnus",
+          "executable": "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/snapshot",
+          "num_cpus": 96,
+          "mhz_per_cpu": 1800,
+          "cpu_scaling_enabled": false,
+          "caches": [
+            {
+              "type": "Data",
+              "level": 1,
+              "size": 49152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Instruction",
+              "level": 1,
+              "size": 32768,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 2,
+              "size": 2097152,
+              "num_sharing": 2
+            },
+            {
+              "type": "Unified",
+              "level": 3,
+              "size": 47185920,
+              "num_sharing": 48
+            }
+          ],
+          "load_avg": [
+            3.84082,
+            2.18066,
+            1.39941
+          ],
+          "library_version": "v1.8.4",
+          "library_build_type": "release",
+          "json_schema_version": 1
+        },
+        "benchmarks": [
+          {
+            "name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=1KB(20% 8B)/real_time/threads:16",
+            "family_index": 0,
+            "per_family_instance_index": 0,
+            "run_name": "Store=VMemKV/Variant=Bloom-T1InlineValue/Op=Get/Mode=Hit/Dist=Zipf/Value=1KB(20% 8B)/real_time/threads:16",
+            "run_type": "iteration",
+            "repetitions": 1,
+            "repetition_index": 0,
+            "threads": 16,
+            "iterations": 19968768,
+            "real_time": 139.39915798724766,
+            "cpu_time": 2223.3860313765977,
+            "time_unit": "ns",
+            "Append_Region_Live": 6.0,
+            "Append_Region_Peak": 6.0,
+            "Checkpoints": 0.0,
+            "CorpusBytes": 8589934080.0,
+            "CorpusKeys": 8259552.0,
+            "Elapsed_Sec": 2.8358425489375,
+            "Populate_Sec": 2.541669163,
+            "Reorganize_Wait_Duration_us": 0.0,
+            "Reset_Sec": 0.0,
+            "T1_Splits": 0.0,
+            "items_per_second": 7173644.478480141
+          }
+        ]
+      },
+      "exit.json": {
+        "code": 0
+      },
+      "map-memory.json": {
+        "before_current": 8228864,
+        "after_current": 8937472,
+        "body_bytes": 643680,
+        "bpf_load_seconds": 0.0019349772483110428
+      },
+      "memory-limits.json": {
+        "memory.high": "17179869184",
+        "memory.max": "34359738368",
+        "cgroup": "/sys/fs/cgroup/system.slice/vmemkv-hints-be09549979d0.scope",
+        "cpu_affinity": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ]
+      },
+      "scope-command.json": [
+        "systemd-run",
+        "--scope",
+        "--quiet",
+        "--unit=vmemkv-hints-be09549979d0",
+        "-p",
+        "MemoryHigh=17179869184",
+        "-p",
+        "MemoryMax=34359738368",
+        "-p",
+        "MemorySwapMax=1099511627776",
+        "--",
+        "taskset",
+        "-c",
+        "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30",
+        "/usr/bin/python3",
+        "/home/wasanemon/project/VMemKV-1K/implementation/vmemkv/benchmark/prototypes/run_snapshot_original_resident.py",
+        "case",
+        "--variant",
+        "snapshot",
+        "--scenario",
+        "resident",
+        "--dist",
+        "Zipf",
+        "--threads",
+        "16",
+        "--uid",
+        "1016",
+        "--gid",
+        "1016",
+        "--dest",
+        "/home/wasanemon/project/VMemKV-1K/build/ltm/results/page-residency-snapshot-20260923/original-resident/measurements/r2-resident-Zipf-t16-snapshot"
+      ],
+      "scope-exit.json": {
+        "code": 0,
+        "wall_seconds": 6.5220074420794845
+      },
+      "snapshot-init.json": {
+        "snapshot_seconds": 0.005124791,
+        "resident_pages": 1716438,
+        "confirmed_pages": 1716438,
+        "mincore_calls": 1677
+      },
+      "throughput.json": {
+        "variant": "snapshot",
+        "scenario": "resident",
+        "distribution": "Zipf",
+        "threads": 16,
+        "repetition": 2,
+        "ops_per_second": 7173644.478480141
+      }
+    }
+  },
+  "summary.json": [
+    {
+      "scenario": "resident",
+      "distribution": "Uniform",
+      "threads": 1,
+      "original": 343543.5667329694,
+      "snapshot": 337413.15256538347,
+      "change_percent": -1.7844648426646348,
+      "raw": {
+        "original": [
+          349771.64396654966,
+          337315.4894993892
+        ],
+        "snapshot": [
+          337675.36365375365,
+          337150.9414770132
+        ]
+      }
+    },
+    {
+      "scenario": "resident",
+      "distribution": "Uniform",
+      "threads": 16,
+      "original": 5446982.427793638,
+      "snapshot": 5533135.640211503,
+      "change_percent": 1.5816686313923523,
+      "raw": {
+        "original": [
+          5447150.548576804,
+          5446814.307010472
+        ],
+        "snapshot": [
+          5534940.521647716,
+          5531330.75877529
+        ]
+      }
+    },
+    {
+      "scenario": "resident",
+      "distribution": "Zipf",
+      "threads": 1,
+      "original": 424870.2058078917,
+      "snapshot": 421975.33948412654,
+      "change_percent": -0.6813531012984431,
+      "raw": {
+        "original": [
+          426267.63834494905,
+          423472.77327083424
+        ],
+        "snapshot": [
+          424192.6612164043,
+          419758.01775184885
+        ]
+      }
+    },
+    {
+      "scenario": "resident",
+      "distribution": "Zipf",
+      "threads": 16,
+      "original": 7202003.476187654,
+      "snapshot": 7168407.953932837,
+      "change_percent": -0.4664746742471859,
+      "raw": {
+        "original": [
+          7201876.617920091,
+          7202130.334455215
+        ],
+        "snapshot": [
+          7163171.429385532,
+          7173644.478480141
+        ]
+      }
+    }
+  ],
+  "plan.json": {
+    "scenario": "resident",
+    "distributions": [
+      "Uniform",
+      "Zipf"
+    ],
+    "threads": [
+      1,
+      16
+    ],
+    "variants": [
+      "original",
+      "snapshot"
+    ],
+    "repetitions": 2,
+    "total_runs": 16,
+    "benchmark_min_time_seconds": 2,
+    "cpu_1": [
+      0
+    ],
+    "cpu_16": [
+      0,
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      30
+    ],
+    "memory_high_max_GiB": [
+      16,
+      32
+    ],
+    "purpose": "案1適用前の元実装と比べて常駐時の劣化が解消したか確認。LTMは再測定しない。"
+  },
+  "event-formats.json": {
+    "mm_filemap_add_to_page_cache": "name: mm_filemap_add_to_page_cache\nID: 498\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:unsigned long pfn;\toffset:8;\tsize:8;\tsigned:0;\n\tfield:unsigned long i_ino;\toffset:16;\tsize:8;\tsigned:0;\n\tfield:unsigned long index;\toffset:24;\tsize:8;\tsigned:0;\n\tfield:dev_t s_dev;\toffset:32;\tsize:4;\tsigned:0;\n\nprint fmt: \"dev %d:%d ino %lx page=%p pfn=0x%lx ofs=%lu\", ((unsigned int) ((REC->s_dev) >> 20)), ((unsigned int) ((REC->s_dev) & ((1U << 20) - 1))), REC->i_ino, (((struct page *)vmemmap_base) + (REC->pfn)), REC->pfn, REC->index << 12\n",
+    "mm_filemap_delete_from_page_cache": "name: mm_filemap_delete_from_page_cache\nID: 499\nformat:\n\tfield:unsigned short common_type;\toffset:0;\tsize:2;\tsigned:0;\n\tfield:unsigned char common_flags;\toffset:2;\tsize:1;\tsigned:0;\n\tfield:unsigned char common_preempt_count;\toffset:3;\tsize:1;\tsigned:0;\n\tfield:int common_pid;\toffset:4;\tsize:4;\tsigned:1;\n\n\tfield:unsigned long pfn;\toffset:8;\tsize:8;\tsigned:0;\n\tfield:unsigned long i_ino;\toffset:16;\tsize:8;\tsigned:0;\n\tfield:unsigned long index;\toffset:24;\tsize:8;\tsigned:0;\n\tfield:dev_t s_dev;\toffset:32;\tsize:4;\tsigned:0;\n\nprint fmt: \"dev %d:%d ino %lx page=%p pfn=0x%lx ofs=%lu\", ((unsigned int) ((REC->s_dev) >> 20)), ((unsigned int) ((REC->s_dev) & ((1U << 20) - 1))), REC->i_ino, (((struct page *)vmemmap_base) + (REC->pfn)), REC->pfn, REC->index << 12\n"
+  }
+}

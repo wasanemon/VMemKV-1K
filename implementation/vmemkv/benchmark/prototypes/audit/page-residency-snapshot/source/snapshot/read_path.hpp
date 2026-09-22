@@ -1,3 +1,4 @@
+#include "page_residency_hints.hpp"
 // read_path.hpp - T2 base-region read path for VMemKVImpl.
 //
 // Once a record's offset is below `base_boundary`, its bytes are immutable forever (an
@@ -159,15 +160,20 @@ inline auto try_read_resident_base_record(std::byte *mapping,
   const auto aligned_start = start & ~kPageMask;
   const auto aligned_len = ((start + read_len + kPageMask) & ~kPageMask) - aligned_start;
 
+  const auto ticket = page_residency::observe(mapping, offset, read_len);
+  if (!ticket.hit) {
   thread_local static std::vector<unsigned char> tl_mincore_vec;
   tl_mincore_vec.resize(aligned_len / kPageSize);
   if (::mincore(reinterpret_cast<void *>(aligned_start), aligned_len, tl_mincore_vec.data()) != 0) {
     return std::nullopt;
   }
+  ticket.confirm(tl_mincore_vec.data());
   for (unsigned char page_status : tl_mincore_vec) {
     if ((page_status & 1) == 0) {
       return std::nullopt;  // Not resident -- let the caller's pread() fetch it instead.
     }
+  }
+
   }
 
   const auto *header = reinterpret_cast<const ValueRecordHeader *>(record_base);
